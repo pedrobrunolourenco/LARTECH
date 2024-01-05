@@ -8,10 +8,13 @@ namespace Lartech.Domain.Services
     {
 
         private readonly IRepositoryPessoa _repositoryPessoa;
+        private readonly IRepositoryTelefone _repositoryTelefone;
 
-        public ServicePessoa(IRepositoryPessoa repositoryPessoa)
+        public ServicePessoa(IRepositoryPessoa repositoryPessoa,
+                             IRepositoryTelefone repositoryTelefone)
         {
             _repositoryPessoa = repositoryPessoa;
+            _repositoryTelefone = repositoryTelefone;
         }
 
 
@@ -70,6 +73,32 @@ namespace Lartech.Domain.Services
         public IEnumerable<Pessoa> ObterTodas()
         {
             return _repositoryPessoa.Listar();
+        }
+
+        public Telefone AdicionarTelefone(Telefone fone)
+        {
+            if (!fone.Validar()) return fone;
+            _repositoryTelefone.Adicionar(fone);
+            _repositoryPessoa.Salvar();
+            return fone;
+        }
+
+        public Telefone AlterarTelefone(Telefone fone)
+        {
+            if (!fone.Validar()) return fone;
+            _repositoryTelefone.DetachAllEntities();
+            _repositoryTelefone.Atualizar(fone);
+            _repositoryTelefone.Salvar();
+            return fone;
+        }
+
+        public void ExcluirTelefone(Guid idtelefone)
+        {
+            var fone = _repositoryTelefone.ObterPorId(idtelefone);
+            if (fone == null) return;
+            _repositoryTelefone.DetachAllEntities();
+            _repositoryTelefone.Remover(fone);
+            _repositoryTelefone.Salvar();
         }
     }
 }

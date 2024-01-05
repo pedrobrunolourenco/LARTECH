@@ -32,9 +32,9 @@ namespace Lartech.Domain.Entidades
         public TipoTelefone Tipo {  get; private set; }
         public string Numero { get; private set; }
 
-
         // EF
         public Pessoa Pessoa { get; set; }
+
 
         public override bool Validar()
         {
