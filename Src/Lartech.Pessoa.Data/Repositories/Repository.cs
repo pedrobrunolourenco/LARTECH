@@ -7,18 +7,18 @@ namespace Lartech.Data.Repositories
     public class Repository<TEntidade> : IRepository<TEntidade> where TEntidade : Entity
     {
 
-        protected DataContext Db;
+        protected DataContext _context;
         protected DbSet<TEntidade> DbSet;
 
         public Repository(DataContext context)
         {
-            Db = context;
-            DbSet = Db.Set<TEntidade>();
+            _context = context;
+            DbSet = _context.Set<TEntidade>();
         }
 
         public void DetachAllEntities()
         {
-            var changedEntriesCopy = Db.ChangeTracker.Entries().ToList();
+            var changedEntriesCopy = _context.ChangeTracker.Entries().ToList();
 
             foreach (var entry in changedEntriesCopy)
                 entry.State = EntityState.Detached;
@@ -30,9 +30,9 @@ namespace Lartech.Data.Repositories
             return DbSet.ToList();
         }
 
-        public TEntidade ObterPorId(Guid id)
+        public TEntidade? ObterPorId(Guid id)
         {
-            return DbSet.Find(id); ;
+            return DbSet.Find(id); 
         }
 
         public void Adicionar(TEntidade obj)
@@ -52,12 +52,12 @@ namespace Lartech.Data.Repositories
 
         public void Salvar()
         {
-            Db.SaveChanges();
+            _context.SaveChanges();
         }
 
         public void Dispose()
         {
-            Db.Dispose();
+            _context.Dispose();
         }
 
     }

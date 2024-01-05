@@ -41,7 +41,7 @@ namespace Lartech.Domain.Entidades
             ValidationResult = new TelefoneValidation().Validate(this);
             foreach (var erro in ValidationResult.Errors)
             {
-                AdicionarErros(erro.ErrorMessage);
+                ListaErros.Add(erro.ErrorMessage);
             }
             return ValidationResult.IsValid;
         }

@@ -11,5 +11,30 @@ namespace Lartech.Data.Repositories
 
         }
 
+        public Pessoa Ativar(Pessoa pessoa)
+        {
+            pessoa.Ativo = true;
+            Atualizar(pessoa);
+            Salvar();
+            return pessoa;
+        }
+
+        public Pessoa Inativar(Pessoa pessoa)
+        {
+            pessoa.Ativo = false;
+            Atualizar(pessoa);
+            Salvar();
+            return pessoa;
+        }
+
+        public Pessoa? ObterPorCpf(string cpf)
+        {
+            return Listar().Where(p => p.CPF == cpf).FirstOrDefault();
+        }
+
+        public Pessoa? ObterPorNome(string nome)
+        {
+            return Listar().Where(p => p.Nome == nome).FirstOrDefault();
+        }
     }
 }

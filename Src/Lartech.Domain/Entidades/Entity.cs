@@ -15,11 +15,6 @@ namespace Lartech.Domain.Entidades
         public ValidationResult ValidationResult { get; set; }
         public abstract bool Validar();
 
-        protected List<string> AdicionarErros(string mensagem)
-        {
-            ListaErros.Add(mensagem);
-            return ListaErros;
-        }
 
     }
 }
