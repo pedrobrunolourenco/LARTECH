@@ -5,7 +5,10 @@ namespace Lartech.Domain.Entidades
 {
     public class Pessoa : Entity, IAggregateRoot
     {
-
+        public Pessoa()
+        {
+            
+        }
         public Pessoa(string nome, string cpf, DateTime datanascimento, bool ativo)
         {
             Nome = nome;
@@ -18,6 +21,10 @@ namespace Lartech.Domain.Entidades
         public string CPF { get; private set; }
         public DateTime DataNascimento { get; private set; }
         public bool Ativo { get; set; }
+
+        private readonly List<Telefone> _telefones;
+
+        public IReadOnlyCollection<Telefone> Telefones=> _telefones;
 
         public override bool Validar()
         {

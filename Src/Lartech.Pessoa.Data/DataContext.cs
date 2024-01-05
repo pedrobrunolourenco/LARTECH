@@ -1,15 +1,21 @@
-﻿using Lartech.Domain.Entidades;
+﻿using Lartech.Data.Mappings;
+using Lartech.Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace Lartech.Data
 {
     public class DataContext : DbContext
     {
+        public DataContext()
+        {
+            
+        }
         public DataContext(DbContextOptions<DataContext> options) : base(options) 
         { 
 
         }
+
 
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<Telefone> Telefones { get; set; }
@@ -17,12 +23,10 @@ namespace Lartech.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Ignore<ListaErros>();
-            modelBuilder.Ignore<ValidationResult>();
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
+            modelBuilder.ApplyConfiguration(new PessoaMapping());
+            modelBuilder.ApplyConfiguration(new TelefoneMapping());
+
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }

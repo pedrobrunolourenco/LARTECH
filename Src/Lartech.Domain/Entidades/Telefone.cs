@@ -10,8 +10,15 @@ namespace Lartech.Domain.Entidades
         Comercial
     }
 
+
+
     public class Telefone : Entity
     {
+
+        public Telefone()
+        {
+            
+        }
 
         public Telefone(Guid pessoaId, TipoTelefone tipo, string numero)
         {
