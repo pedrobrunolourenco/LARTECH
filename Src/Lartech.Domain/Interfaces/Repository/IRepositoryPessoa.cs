@@ -8,7 +8,7 @@ namespace Lartech.Domain.Interfaces.Repository
         IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome);
         IEnumerable<PessoaViewModel> ObterAtivos();
         IEnumerable<PessoaViewModel> ObterInativos();
-        Pessoa? ObterPorCpf(string cpf);
+        PessoaViewModel? ObterPorCpf(string cpf);
         Pessoa Inativar(Pessoa pessoa);
         Pessoa Ativar(Pessoa pessoa);
     }

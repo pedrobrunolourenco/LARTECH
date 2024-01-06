@@ -78,9 +78,27 @@ namespace Lartech.Data.Repositories
         }
 
 
-        public Pessoa? ObterPorCpf(string cpf)
+        public PessoaViewModel? ObterPorCpf(string cpf)
         {
-            return Listar().Where(p => p.CPF == cpf).FirstOrDefault();
+            StringBuilder query = new StringBuilder();
+
+            query.Append(@$" SELECT DISTINCT p.Id, 
+                                   p.Nome,
+                                   p.CPF,
+                                   p.DataNascimento,
+                                   p.Ativo,
+                                   t.Numero,
+                                   t.Tipo
+                                   FROM Pessoas p WITH(NOLOCK) 
+							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
+                            WHERE p.CPF = @CPF
+							ORDER BY p.Nome
+                          ");
+
+            var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString(), new { CPF = cpf }).ToList();
+            var pessoaViewModel = TransformarDTO(retorno).FirstOrDefault();
+            return pessoaViewModel;
+
         }
 
         public IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome)

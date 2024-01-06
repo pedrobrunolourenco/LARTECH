@@ -3,7 +3,6 @@ using Lartech.Application.Interfaces;
 using Lartech.Application.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace Lartech.Api.Controllers
 {

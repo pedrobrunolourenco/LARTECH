@@ -7,7 +7,7 @@ namespace Lartech.Application.Interfaces
     {
         IEnumerable<PessoaModel> ObterTodas();
         PessoaModel? ObterPorId(Guid id);
-        PessoaModel? ObterPorCpf(string cpf);
+        PessoaViewModel? ObterPorCpf(string cpf);
         IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome);
 
         IEnumerable<PessoaViewModel> ObterAtivos();

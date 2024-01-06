@@ -40,9 +40,9 @@ namespace Lartech.Application.Services
             return _mapper.Map<PessoaModel>(_servicePessoa.ObterPorId(id));
         }
 
-        public PessoaModel? ObterPorCpf(string cpf)
+        public PessoaViewModel? ObterPorCpf(string cpf)
         {
-            return _mapper.Map<PessoaModel>(_servicePessoa.ObterPorCpf(cpf));
+            return _servicePessoa.ObterPorCpf(cpf);
         }
 
         public IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome)

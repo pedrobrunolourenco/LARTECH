@@ -95,7 +95,7 @@ namespace Lartech.Domain.Services
             return _repositoryPessoa.Inativar(pessoa);
         }
 
-        public Pessoa? ObterPorCpf(string cpf)
+        public PessoaViewModel? ObterPorCpf(string cpf)
         {
             return _repositoryPessoa.ObterPorCpf(cpf);
         }
