@@ -1,5 +1,4 @@
 ﻿using Lartech.Application.Models;
-using Lartech.Domain.Entidades;
 
 namespace Lartech.Application.Interfaces
 {
