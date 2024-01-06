@@ -1,6 +1,7 @@
 ﻿using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Repository;
 using Lartech.Domain.Interfaces.Service;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Lartech.Domain.Services
 {
@@ -21,6 +22,11 @@ namespace Lartech.Domain.Services
         public Pessoa IncluirPessoa(Pessoa pessoa)
         {
             if (!pessoa.Validar()) return pessoa;
+            if (VerificarSeCPFJaExiste(pessoa))
+            {
+                pessoa.ListaErros.Add($"O CPF {pessoa.CPF} já existe para outra pessoa.");
+                return pessoa;
+            }
             _repositoryPessoa.Adicionar(pessoa);
             _repositoryPessoa.Salvar();
             return pessoa;
@@ -30,6 +36,11 @@ namespace Lartech.Domain.Services
         public Pessoa AlterarPessoa(Pessoa pessoa)
         {
             if (!pessoa.Validar()) return pessoa;
+            if (VerificarSeCPFJaExiste(pessoa))
+            {
+                pessoa.ListaErros.Add($"O CPF {pessoa.CPF} já existe para outra pessoa.");
+                return pessoa;
+            }
             _repositoryPessoa.DetachAllEntities();
             _repositoryPessoa.Atualizar(pessoa);
             _repositoryPessoa.Salvar();
@@ -65,9 +76,9 @@ namespace Lartech.Domain.Services
             return _repositoryPessoa.ObterPorId(id);
         }
 
-        public Pessoa? ObterPorNome(string nome)
+        public IEnumerable<Pessoa> ObterPorParteDoNome(string nome)
         {
-            return _repositoryPessoa.ObterPorNome(nome);
+            return _repositoryPessoa.ObterPorParteDoNome(nome);
         }
 
         public IEnumerable<Pessoa> ObterTodas()
@@ -78,6 +89,11 @@ namespace Lartech.Domain.Services
         public Telefone AdicionarTelefone(Telefone fone)
         {
             if (!fone.Validar()) return fone;
+            if (VerificarSeTelefoneJaExiste(fone)) 
+            { 
+                fone.ListaErros.Add($"O telefone {fone.Numero} já existe para outra pessoa." );
+                return fone;
+            }
             _repositoryTelefone.Adicionar(fone);
             _repositoryPessoa.Salvar();
             return fone;
@@ -86,6 +102,11 @@ namespace Lartech.Domain.Services
         public Telefone AlterarTelefone(Telefone fone)
         {
             if (!fone.Validar()) return fone;
+            if (VerificarSeTelefoneJaExiste(fone))
+            {
+                fone.ListaErros.Add($"O telefone {fone.Numero} já existe para outra pessoa.");
+                return fone;
+            }
             _repositoryTelefone.DetachAllEntities();
             _repositoryTelefone.Atualizar(fone);
             _repositoryTelefone.Salvar();
@@ -100,5 +121,17 @@ namespace Lartech.Domain.Services
             _repositoryTelefone.Remover(fone);
             _repositoryTelefone.Salvar();
         }
+
+        private bool VerificarSeTelefoneJaExiste(Telefone telefone)
+        {
+            return _repositoryTelefone.Listar().Where(t => t.Numero == telefone.Numero && t.Id != telefone.Id).Any();
+        }
+
+        private bool VerificarSeCPFJaExiste(Pessoa pessoa)
+        {
+            return _repositoryPessoa.Listar().Where(p => p.CPF == pessoa.CPF && p.Id != pessoa.Id).Any();
+        }
+
+
     }
 }

@@ -32,9 +32,9 @@ namespace Lartech.Data.Repositories
             return Listar().Where(p => p.CPF == cpf).FirstOrDefault();
         }
 
-        public Pessoa? ObterPorNome(string nome)
+        public IEnumerable<Pessoa> ObterPorParteDoNome(string nome)
         {
-            return Listar().Where(p => p.Nome == nome).FirstOrDefault();
+            return Listar().Where(p => p.Nome.Contains(nome));
         }
     }
 }
