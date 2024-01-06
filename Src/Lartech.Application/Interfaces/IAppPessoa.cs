@@ -10,8 +10,8 @@ namespace Lartech.Application.Interfaces
         PessoaModel? ObterPorCpf(string cpf);
         IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome);
 
-        IEnumerable<PessoaModel> ObterAtivos();
-        IEnumerable<PessoaModel> ObterInativos();
+        IEnumerable<PessoaViewModel> ObterAtivos();
+        IEnumerable<PessoaViewModel> ObterInativos();
 
         PessoaModel IncluirPessoa(PessoaModel pessoa);
         PessoaModel AlterarPessoa(PessoaModel pessoa);

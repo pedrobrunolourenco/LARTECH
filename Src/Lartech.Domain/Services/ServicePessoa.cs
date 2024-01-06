@@ -116,12 +116,12 @@ namespace Lartech.Domain.Services
             return _repositoryPessoa.Listar();
         }
 
-        public IEnumerable<Pessoa> ObterAtivos()
+        public IEnumerable<PessoaViewModel> ObterAtivos()
         {
             return _repositoryPessoa.ObterAtivos();
         }
 
-        public IEnumerable<Pessoa> ObterInativos()
+        public IEnumerable<PessoaViewModel> ObterInativos()
         {
             return _repositoryPessoa.ObterInativos();
         }

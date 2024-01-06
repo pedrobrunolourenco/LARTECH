@@ -26,14 +26,14 @@ namespace Lartech.Application.Services
             return _mapper.Map<IEnumerable<PessoaModel>>(_servicePessoa.ObterTodas());
         }
 
-        public IEnumerable<PessoaModel> ObterAtivos()
+        public IEnumerable<PessoaViewModel> ObterAtivos()
         {
-            return _mapper.Map<IEnumerable<PessoaModel>>(_servicePessoa.ObterAtivos());
+            return _servicePessoa.ObterAtivos();
         }
 
-        public IEnumerable<PessoaModel> ObterInativos()
+        public IEnumerable<PessoaViewModel> ObterInativos()
         {
-            return _mapper.Map<IEnumerable<PessoaModel>>(_servicePessoa.ObterInativos());
+            return _servicePessoa.ObterInativos();
         }
         public PessoaModel? ObterPorId(Guid id)
         {

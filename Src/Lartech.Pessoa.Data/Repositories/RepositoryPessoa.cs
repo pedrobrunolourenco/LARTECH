@@ -33,14 +33,48 @@ namespace Lartech.Data.Repositories
             return pessoa;
         }
 
-        public IEnumerable<Pessoa> ObterAtivos()
+        public IEnumerable<PessoaViewModel> ObterAtivos()
         {
-            return Listar().Where(p => p.Ativo.Equals(true));
+            StringBuilder query = new StringBuilder();
+
+            query.Append(@$" SELECT DISTINCT p.Id, 
+                                   p.Nome,
+                                   p.CPF,
+                                   p.DataNascimento,
+                                   p.Ativo,
+                                   t.Numero,
+                                   t.Tipo
+                                   FROM Pessoas p WITH(NOLOCK) 
+							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
+                            WHERE p.Ativo = 1
+							ORDER BY p.Nome
+                          ");
+
+            var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString()).ToList();
+            var pessoaViewModel = TransformarDTO(retorno);
+            return pessoaViewModel;
         }
 
-        public IEnumerable<Pessoa> ObterInativos()
+        public IEnumerable<PessoaViewModel> ObterInativos()
         {
-            return Listar().Where(p => p.Ativo.Equals(false));
+            StringBuilder query = new StringBuilder();
+
+            query.Append(@$" SELECT DISTINCT p.Id, 
+                                   p.Nome,
+                                   p.CPF,
+                                   p.DataNascimento,
+                                   p.Ativo,
+                                   t.Numero,
+                                   t.Tipo
+                                   FROM Pessoas p WITH(NOLOCK) 
+							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
+                            WHERE p.Ativo = 0
+							ORDER BY p.Nome
+                          ");
+
+            var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString()).ToList();
+            var pessoaViewModel = TransformarDTO(retorno);
+            return pessoaViewModel;
         }
 
 
