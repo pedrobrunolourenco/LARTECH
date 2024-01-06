@@ -13,7 +13,7 @@ namespace Lartech.Data.Repositories
 
         public Pessoa Ativar(Pessoa pessoa)
         {
-            pessoa.Ativo = true;
+            pessoa.Ativar();
             Atualizar(pessoa);
             Salvar();
             return pessoa;
@@ -21,10 +21,21 @@ namespace Lartech.Data.Repositories
 
         public Pessoa Inativar(Pessoa pessoa)
         {
-            pessoa.Ativo = false;
+            pessoa.Inativar();
             Atualizar(pessoa);
             Salvar();
             return pessoa;
+        }
+
+        public IEnumerable<Pessoa> ObterAtivos()
+        {
+            return Listar().Where(p => p.Ativo.Equals(true));
+
+        }
+
+        public IEnumerable<Pessoa> ObterInativos()
+        {
+            return Listar().Where(p => p.Ativo.Equals(false));
         }
 
         public Pessoa? ObterPorCpf(string cpf)

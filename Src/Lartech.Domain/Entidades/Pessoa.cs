@@ -20,11 +20,22 @@ namespace Lartech.Domain.Entidades
         public string Nome { get; private set; }
         public string CPF { get; private set; }
         public DateTime DataNascimento { get; private set; }
-        public bool Ativo { get; set; }
+        public bool Ativo { get; private set; }
 
         private readonly List<Telefone> _telefones;
 
         public IReadOnlyCollection<Telefone> Telefones=> _telefones;
+
+        public void Ativar()
+        {
+            Ativo = true;
+        }
+
+        public void Inativar()
+        {
+            Ativo = false;
+        }
+
 
         public override bool Validar()
         {

@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lartech.Domain", "Src\Larte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lartech.Data", "Src\Lartech.Pessoa.Data\Lartech.Data.csproj", "{FE105348-F889-441B-8AED-F5E64664C3AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lartech.Api", "Src\Lartech.Api\Lartech.Api.csproj", "{863640E6-81D7-4C24-BA54-4B0F14F2E409}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lartech.Api", "Src\Lartech.Api\Lartech.Api.csproj", "{863640E6-81D7-4C24-BA54-4B0F14F2E409}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lartech.Application", "Src\Lartech.Application\Lartech.Application.csproj", "{CB4BE60B-4CB6-4374-8221-49986F32DDA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{863640E6-81D7-4C24-BA54-4B0F14F2E409}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{863640E6-81D7-4C24-BA54-4B0F14F2E409}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{863640E6-81D7-4C24-BA54-4B0F14F2E409}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB4BE60B-4CB6-4374-8221-49986F32DDA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB4BE60B-4CB6-4374-8221-49986F32DDA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB4BE60B-4CB6-4374-8221-49986F32DDA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB4BE60B-4CB6-4374-8221-49986F32DDA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{4398A386-AEE9-47BE-8DC7-CF517131A64F} = {358F7286-1BC2-47DC-A476-CA6FCD1318F5}
 		{FE105348-F889-441B-8AED-F5E64664C3AB} = {8FDD23D7-6C0D-43AA-BDFB-BBB032D3956F}
 		{863640E6-81D7-4C24-BA54-4B0F14F2E409} = {F8500E67-A9A8-413A-86BF-92D82868841D}
+		{CB4BE60B-4CB6-4374-8221-49986F32DDA1} = {BE6E5EB4-FDE8-42CB-A247-EAA168C46BFD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC904026-DB70-4B8C-B3A3-23FDA83AD167}

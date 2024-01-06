@@ -27,6 +27,7 @@ namespace Lartech.Domain.Services
                 pessoa.ListaErros.Add($"O CPF {pessoa.CPF} já existe para outra pessoa.");
                 return pessoa;
             }
+            pessoa.Ativar();
             _repositoryPessoa.Adicionar(pessoa);
             _repositoryPessoa.Salvar();
             return pessoa;
@@ -86,6 +87,17 @@ namespace Lartech.Domain.Services
             return _repositoryPessoa.Listar();
         }
 
+        public IEnumerable<Pessoa> ObterAtivos()
+        {
+            return _repositoryPessoa.ObterAtivos();
+        }
+
+        public IEnumerable<Pessoa> ObterInativos()
+        {
+            return _repositoryPessoa.ObterInativos();
+        }
+
+
         public Telefone AdicionarTelefone(Telefone fone)
         {
             if (!fone.Validar()) return fone;
@@ -131,7 +143,6 @@ namespace Lartech.Domain.Services
         {
             return _repositoryPessoa.Listar().Where(p => p.CPF == pessoa.CPF && p.Id != pessoa.Id).Any();
         }
-
 
     }
 }

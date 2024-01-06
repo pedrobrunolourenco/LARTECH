@@ -8,8 +8,9 @@ namespace Lartech.Domain.Interfaces.Service
         Pessoa? ObterPorId(Guid id);
         Pessoa? ObterPorCpf(string cpf);
         IEnumerable<Pessoa> ObterPorParteDoNome(string nome);
-        Pessoa Ativar(Pessoa pessoa);
-        Pessoa Inativar(Pessoa pessoa);
+
+        IEnumerable<Pessoa> ObterAtivos();
+        IEnumerable<Pessoa> ObterInativos();
 
         Pessoa IncluirPessoa(Pessoa pessoa);
         Pessoa AlterarPessoa(Pessoa pessoa);
@@ -18,5 +19,9 @@ namespace Lartech.Domain.Interfaces.Service
         Telefone AdicionarTelefone(Telefone fone);
         Telefone AlterarTelefone(Telefone fone);
         void ExcluirTelefone(Guid idtelefone);
+
+        Pessoa Ativar(Pessoa pessoa);
+        Pessoa Inativar(Pessoa pessoa);
+
     }
 }
