@@ -34,15 +34,15 @@ namespace Lartech.Api.Controllers
             }
         }
 
-        protected List<string> AddErros(List<string> erros)
-        {
-            var _errors = new List<string>();
-            foreach (var item in erros)
-            {
-                _errors.Add(item);
-            }
-            return _errors;
-        }
+        //protected List<string> AddErros(List<string> erros)
+        //{
+        //    var _errors = new List<string>();
+        //    foreach (var item in erros)
+        //    {
+        //        _errors.Add(item);
+        //    }
+        //    return _errors;
+        //}
 
     }
 }
