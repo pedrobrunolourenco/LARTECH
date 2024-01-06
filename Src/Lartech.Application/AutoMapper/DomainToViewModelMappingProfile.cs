@@ -13,7 +13,8 @@ namespace Lartech.Application.AutoMapper
     {
         public DomainToViewModelMappingProfile()
         {
-            CreateMap<Pessoa, PessoaModel>();
+            CreateMap<Pessoa, PessoaModel>()
+                .ForMember(d => d.ListaTelefone, o => o.MapFrom(s => s.ListaTelefones));
             CreateMap<Telefone, TelefoneModel>();
         }
     }
