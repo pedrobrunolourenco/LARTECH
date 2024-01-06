@@ -1,7 +1,11 @@
-﻿using Lartech.Domain.DTOS;
+﻿using Dapper;
+using Lartech.Domain.DTOS;
 using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Repository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Lartech.Data.Repositories
 {
@@ -11,25 +15,6 @@ namespace Lartech.Data.Repositories
         public RepositoryPessoa(DataContext context) : base(context)
         {
 
-        }
-        public IEnumerable<PessoaDTO> ObterListagemPessoasTelefones()
-        {
-            var pessoas = (
-                from p in _context.Pessoas
-                join t in _context.Telefones on p.Id equals t.PessoaId into _p
-                from x in _p.DefaultIfEmpty()
-                select new
-                {
-                    p.Id,
-                    p.Nome,
-                    p.CPF,
-                    p.Ativo,
-                    p.DataNascimento,
-                    x.Tipo,
-                    x.Numero
-                }).ToList();
-
-            throw new NotImplementedException();
         }
 
         public Pessoa Ativar(Pessoa pessoa)
@@ -51,7 +36,6 @@ namespace Lartech.Data.Repositories
         public IEnumerable<Pessoa> ObterAtivos()
         {
             return Listar().Where(p => p.Ativo.Equals(true));
-
         }
 
         public IEnumerable<Pessoa> ObterInativos()
@@ -65,9 +49,59 @@ namespace Lartech.Data.Repositories
             return Listar().Where(p => p.CPF == cpf).FirstOrDefault();
         }
 
-        public IEnumerable<Pessoa> ObterPorParteDoNome(string nome)
+        public IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome)
         {
-            return Listar().Where(p => p.Nome.Contains(nome));
+            StringBuilder query = new StringBuilder();
+
+            query.Append(@$" SELECT DISTINCT p.Id, 
+                                   p.Nome,
+                                   p.CPF,
+                                   p.DataNascimento,
+                                   p.Ativo,
+                                   t.Numero,
+                                   t.Tipo
+                                   FROM Pessoas p WITH(NOLOCK) 
+							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
+                            WHERE p.Nome LIKE @NOME
+							ORDER BY p.Nome
+                          ");
+
+            var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString(), new { NOME = "%" + nome + "%" }).ToList();
+            var pessoaViewModel = TransformarDTO(retorno);
+            return pessoaViewModel;
+        }
+
+        private List<PessoaViewModel> TransformarDTO(List<PessoaDTO> dto)
+        {
+            var retorno = new List<PessoaViewModel>();
+            foreach (var dtoItem in dto) 
+            {
+                var pessoa = retorno.Where(x => x.Id == dtoItem.Id).FirstOrDefault();
+                if (pessoa == null)
+                {
+                    var item = new PessoaViewModel();
+                    item.Id = dtoItem.Id;
+                    item.Nome = dtoItem.Nome;
+                    item.CPF = dtoItem.CPF;
+                    item.DataNascimento = dtoItem.DataNascimento;
+                    item.Ativo = dtoItem.Ativo;
+                    item.Telefones.Add(new TelefoneDTO
+                    {
+                        Tipo = dtoItem.Tipo,
+                        Numero = dtoItem.Numero
+                    });
+                    retorno.Add(item);
+                }
+                else
+                {
+                    pessoa.Telefones.Add(new TelefoneDTO
+                    {
+                        Tipo = dtoItem.Tipo,
+                        Numero = dtoItem.Numero
+                    });
+                }
+            }
+            return retorno;
         }
     }
 }

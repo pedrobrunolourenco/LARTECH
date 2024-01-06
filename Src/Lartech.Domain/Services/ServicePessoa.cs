@@ -19,10 +19,6 @@ namespace Lartech.Domain.Services
             _repositoryTelefone = repositoryTelefone;
         }
 
-        public IEnumerable<PessoaDTO> ObterListagemPessoasTelefones()
-        {
-            return _repositoryPessoa.ObterListagemPessoasTelefones();
-        }
 
         public Pessoa IncluirPessoa(Pessoa pessoa)
         {
@@ -109,14 +105,14 @@ namespace Lartech.Domain.Services
             return _repositoryPessoa.ObterPorId(id);
         }
 
-        public IEnumerable<Pessoa> ObterPorParteDoNome(string nome)
+        public IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome)
         {
+
             return _repositoryPessoa.ObterPorParteDoNome(nome);
         }
 
         public IEnumerable<Pessoa> ObterTodas()
         {
-            var teste = _repositoryPessoa.ObterListagemPessoasTelefones();
             return _repositoryPessoa.Listar();
         }
 

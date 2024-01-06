@@ -1,4 +1,5 @@
 ﻿using Lartech.Application.Models;
+using Lartech.Domain.DTOS;
 
 namespace Lartech.Application.Interfaces
 {
@@ -7,7 +8,7 @@ namespace Lartech.Application.Interfaces
         IEnumerable<PessoaModel> ObterTodas();
         PessoaModel? ObterPorId(Guid id);
         PessoaModel? ObterPorCpf(string cpf);
-        IEnumerable<PessoaModel> ObterPorParteDoNome(string nome);
+        IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome);
 
         IEnumerable<PessoaModel> ObterAtivos();
         IEnumerable<PessoaModel> ObterInativos();

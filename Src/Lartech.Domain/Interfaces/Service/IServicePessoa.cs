@@ -5,11 +5,10 @@ namespace Lartech.Domain.Interfaces.Service
 {
     public interface IServicePessoa
     {
-        IEnumerable<PessoaDTO> ObterListagemPessoasTelefones();
         IEnumerable<Pessoa> ObterTodas();
         Pessoa? ObterPorId(Guid id);
         Pessoa? ObterPorCpf(string cpf);
-        IEnumerable<Pessoa> ObterPorParteDoNome(string nome);
+        IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome);
 
         IEnumerable<Pessoa> ObterAtivos();
         IEnumerable<Pessoa> ObterInativos();

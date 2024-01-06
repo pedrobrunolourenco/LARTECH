@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Lartech.Application.Interfaces;
 using Lartech.Application.Models;
+using Lartech.Domain.DTOS;
 using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Service;
 using static System.Net.Mime.MediaTypeNames;
@@ -44,9 +45,9 @@ namespace Lartech.Application.Services
             return _mapper.Map<PessoaModel>(_servicePessoa.ObterPorCpf(cpf));
         }
 
-        public IEnumerable<PessoaModel> ObterPorParteDoNome(string nome)
+        public IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome)
         {
-            return _mapper.Map<IEnumerable<PessoaModel>>(_servicePessoa.ObterPorParteDoNome(nome));
+            return _servicePessoa.ObterPorParteDoNome(nome);
         }
 
 
