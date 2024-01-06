@@ -3,13 +3,13 @@ using Lartech.Api.Setup;
 using Lartech.Application.AutoMapper;
 using Lartech.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(ViewModelToDomainMappingProfile));
 builder.Services.RegisterServices();
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

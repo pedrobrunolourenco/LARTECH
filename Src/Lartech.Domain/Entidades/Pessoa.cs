@@ -1,5 +1,9 @@
 ﻿using FluentValidation;
 using Lartech.Domain.Interfaces;
+using System.Collections.Generic;
+using System;
+using System.Text.RegularExpressions;
+using System.Security.Claims;
 
 namespace Lartech.Domain.Entidades
 {
@@ -68,7 +72,7 @@ namespace Lartech.Domain.Entidades
                     .WithMessage("O nome deve ter no máximo 100 caracteres.");
 
                 RuleFor(p => p.DataNascimento)
-                     .NotEqual(null)
+                     .NotNull()
                      .WithMessage("Data de nascimento deve ser informada.");
 
                 RuleFor(p => p.CPF)
@@ -77,8 +81,14 @@ namespace Lartech.Domain.Entidades
 
             }
 
+
+
             protected static bool ValidarCPF(string cpf)
             {
+                cpf = Regex.Replace(cpf, @"[^\d]", "");
+
+                if(cpf.Length!=11) return false;
+
                 int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
                 int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
                 string tempCpf;

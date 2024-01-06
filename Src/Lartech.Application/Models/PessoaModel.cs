@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Lartech.Application.Models
 {
@@ -13,9 +14,11 @@ namespace Lartech.Application.Models
 
         [Key]
         [IgnoreDataMember]
+        [JsonIgnore]
         public Guid Id { get; set; }
 
         [IgnoreDataMember]
+        [JsonIgnore]
         public List<string> ListaErros { get; set; }
 
         [Required(ErrorMessage = "Necessário informar nome")]
@@ -32,6 +35,7 @@ namespace Lartech.Application.Models
         public DateTime DataNascimento { get; set; }
 
         [IgnoreDataMember]
+        [JsonIgnore]
         public bool Ativo { get; set; } = true;
 
 
