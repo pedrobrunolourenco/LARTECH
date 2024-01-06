@@ -1,5 +1,7 @@
-﻿using Lartech.Domain.Entidades;
+﻿using Lartech.Domain.DTOS;
+using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Repository;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Lartech.Data.Repositories
 {
@@ -9,6 +11,25 @@ namespace Lartech.Data.Repositories
         public RepositoryPessoa(DataContext context) : base(context)
         {
 
+        }
+        public IEnumerable<PessoaDTO> ObterListagemPessoasTelefones()
+        {
+            var pessoas = (
+                from p in _context.Pessoas
+                join t in _context.Telefones on p.Id equals t.PessoaId into _p
+                from x in _p.DefaultIfEmpty()
+                select new
+                {
+                    p.Id,
+                    p.Nome,
+                    p.CPF,
+                    p.Ativo,
+                    p.DataNascimento,
+                    x.Tipo,
+                    x.Numero
+                }).ToList();
+
+            throw new NotImplementedException();
         }
 
         public Pessoa Ativar(Pessoa pessoa)
@@ -37,6 +58,7 @@ namespace Lartech.Data.Repositories
         {
             return Listar().Where(p => p.Ativo.Equals(false));
         }
+
 
         public Pessoa? ObterPorCpf(string cpf)
         {

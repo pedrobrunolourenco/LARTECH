@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lartech.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240105160248_Correcao")]
-    partial class Correcao
+    [Migration("20240106160518_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

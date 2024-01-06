@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System.Text.RegularExpressions;
 
 namespace Lartech.Domain.Entidades
 {
@@ -35,6 +36,10 @@ namespace Lartech.Domain.Entidades
         // EF
         public Pessoa Pessoa { get; set; }
 
+        public void AtribuirIdPessoa(Guid idpessoa)
+        {
+            PessoaId = idpessoa;
+        }
 
         public override bool Validar()
         {
@@ -55,8 +60,7 @@ namespace Lartech.Domain.Entidades
                      .WithMessage("Id não pode ser vazio.");
 
                 RuleFor(t => t.Tipo)
-                    .NotEmpty()
-                    .WithMessage("O tipo de telefone deve ser informado.");
+                    .IsInEnum();
 
                 RuleFor(t => t.Numero)
                     .MinimumLength(11)
@@ -66,7 +70,11 @@ namespace Lartech.Domain.Entidades
                     .MaximumLength(11)
                     .WithMessage("O telefone deve ter 11 digitos.");
             }
+
+
+
         }
+
 
     }
 }

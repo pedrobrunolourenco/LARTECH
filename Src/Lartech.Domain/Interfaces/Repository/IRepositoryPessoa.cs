@@ -1,9 +1,11 @@
-﻿using Lartech.Domain.Entidades;
+﻿using Lartech.Domain.DTOS;
+using Lartech.Domain.Entidades;
 
 namespace Lartech.Domain.Interfaces.Repository
 {
     public interface IRepositoryPessoa : IRepository<Pessoa>
     {
+        IEnumerable<PessoaDTO> ObterListagemPessoasTelefones();
         IEnumerable<Pessoa> ObterPorParteDoNome(string nome);
         IEnumerable<Pessoa> ObterAtivos();
         IEnumerable<Pessoa> ObterInativos();

@@ -15,6 +15,7 @@ namespace Lartech.Data.Mappings
         {
             builder.HasKey(p => new { p.Id });
             builder.Ignore(p => p.ListaErros);
+            builder.Ignore(p => p.ListaTelefones);
             builder.Ignore(p => p.ValidationResult);
             builder.Property(p => p.Nome).IsRequired().HasColumnType("varchar").HasMaxLength(100);
             builder.Property(p => p.CPF).IsRequired().HasColumnType("varchar").HasMaxLength(11);

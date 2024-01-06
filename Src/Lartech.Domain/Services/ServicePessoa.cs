@@ -1,4 +1,5 @@
-﻿using Lartech.Domain.Entidades;
+﻿using Lartech.Domain.DTOS;
+using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Repository;
 using Lartech.Domain.Interfaces.Service;
 using static System.Net.Mime.MediaTypeNames;
@@ -18,18 +19,49 @@ namespace Lartech.Domain.Services
             _repositoryTelefone = repositoryTelefone;
         }
 
+        public IEnumerable<PessoaDTO> ObterListagemPessoasTelefones()
+        {
+            return _repositoryPessoa.ObterListagemPessoasTelefones();
+        }
 
         public Pessoa IncluirPessoa(Pessoa pessoa)
         {
             if (!pessoa.Validar()) return pessoa;
-            if (VerificarSeCPFJaExiste(pessoa))
-            {
-                pessoa.ListaErros.Add($"O CPF {pessoa.CPF} já existe para outra pessoa.");
-                return pessoa;
-            }
+            if(NaoAdicionouTodosOsTelefones(pessoa)) return pessoa;
+            if (ValidarRegrasDeDominio(pessoa).ListaErros.Any()) return pessoa;
+
             pessoa.Ativar();
+
             _repositoryPessoa.Adicionar(pessoa);
             _repositoryPessoa.Salvar();
+
+
+
+            return pessoa;
+        }
+
+        private bool NaoAdicionouTodosOsTelefones(Pessoa pessoa)
+        {
+            foreach (var telefone in pessoa.ListaTelefones)
+            {
+                if(telefone.Validar())
+                {
+                    _repositoryTelefone.Adicionar(telefone);
+                }
+                else
+                {
+                    foreach (var erroTelefone in telefone.ListaErros)
+                    {
+                        pessoa.ListaErros.Add(erroTelefone);
+                    }
+                }
+            }
+            return pessoa.ListaErros.Any();
+        }
+
+        private Pessoa ValidarRegrasDeDominio(Pessoa pessoa)
+        {
+            if (VerificarSeCPFJaExiste(pessoa))  pessoa.ListaErros.Add($"O CPF {pessoa.CPF} já existe para outra pessoa.");
             return pessoa;
         }
 
@@ -84,6 +116,7 @@ namespace Lartech.Domain.Services
 
         public IEnumerable<Pessoa> ObterTodas()
         {
+            var teste = _repositoryPessoa.ObterListagemPessoasTelefones();
             return _repositoryPessoa.Listar();
         }
 

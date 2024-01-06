@@ -9,6 +9,7 @@ namespace Lartech.Application.Models
         public PessoaModel()
         {
             Id = Guid.NewGuid();
+            ListaTelefone = new List<TelefoneModel>();
             ListaErros = new List<string>();
         }
 
@@ -33,6 +34,8 @@ namespace Lartech.Application.Models
 
         [Required(ErrorMessage = "Necessário informar Data de Nascimento")]
         public DateTime DataNascimento { get; set; }
+
+        public List<TelefoneModel> ListaTelefone { get; set; }
 
         [IgnoreDataMember]
         [JsonIgnore]

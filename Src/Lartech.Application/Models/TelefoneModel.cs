@@ -1,6 +1,7 @@
 ﻿using Lartech.Domain.Entidades;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Lartech.Application.Models
 {
@@ -14,18 +15,23 @@ namespace Lartech.Application.Models
 
         [Key]
         [IgnoreDataMember]
+        [JsonIgnore]
         public Guid Id { get; set; }
 
         [IgnoreDataMember]
+        [JsonIgnore]
         public List<string> ListaErros { get; set; }
 
-        public Guid PessoaId { get; private set; }
-        public TipoTelefone Tipo { get; private set; }
+        [IgnoreDataMember]
+        [JsonIgnore]
+        public Guid PessoaId { get; set; }
+
+        public TipoTelefone Tipo { get; set; }
 
         [Required(ErrorMessage = "Necessário informar número")]
         [MinLength(5, ErrorMessage = "Número deve ter no mínimo 11 caracteres")]
         [MaxLength(11, ErrorMessage = "Número deve ter no mínimo 11 caracteres")]
-        public string Numero { get; private set; }
+        public string Numero { get; set; }
 
 
     }

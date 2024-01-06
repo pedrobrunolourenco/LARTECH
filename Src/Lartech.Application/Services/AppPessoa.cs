@@ -3,6 +3,7 @@ using Lartech.Application.Interfaces;
 using Lartech.Application.Models;
 using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Service;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Lartech.Application.Services
 {
@@ -51,7 +52,12 @@ namespace Lartech.Application.Services
 
         public PessoaModel IncluirPessoa(PessoaModel pessoa)
         {
-            return _mapper.Map<PessoaModel>(_servicePessoa.IncluirPessoa(_mapper.Map<Pessoa>(pessoa)));
+            var xpessoa = _mapper.Map<Pessoa>(pessoa);
+            foreach (var fone in pessoa.ListaTelefone)
+            {
+                xpessoa.AdicionarTelefoneNaLista(_mapper.Map<Telefone>(fone));
+            }
+            return _mapper.Map<PessoaModel>(_servicePessoa.IncluirPessoa(xpessoa));
         }
         public PessoaModel AlterarPessoa(PessoaModel pessoa)
         {

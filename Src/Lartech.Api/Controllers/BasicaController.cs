@@ -15,8 +15,6 @@ namespace Lartech.Api.Controllers
             });
         }
 
-
-
         protected IActionResult RetornoRequest(object? result, List<string> erros)
         {
             if (erros.Any())
@@ -33,16 +31,6 @@ namespace Lartech.Api.Controllers
                 return RetornoRequest(result);
             }
         }
-
-        //protected List<string> AddErros(List<string> erros)
-        //{
-        //    var _errors = new List<string>();
-        //    foreach (var item in erros)
-        //    {
-        //        _errors.Add(item);
-        //    }
-        //    return _errors;
-        //}
 
     }
 }

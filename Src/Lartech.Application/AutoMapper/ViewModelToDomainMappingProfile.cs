@@ -9,11 +9,12 @@ namespace Lartech.Application.AutoMapper
 
         public ViewModelToDomainMappingProfile()
         {
+            CreateMap<TelefoneModel, Telefone>()
+                .ConstructUsing(t => new Telefone(t.PessoaId, t.Tipo, t.Numero));
+
             CreateMap<PessoaModel, Pessoa>()
                 .ConstructUsing(p => new Pessoa(p.Nome, p.CPF, p.DataNascimento, p.Ativo));
 
-            CreateMap<TelefoneModel, Telefone>()
-                .ConstructUsing(t => new Telefone(t.PessoaId, t.Tipo, t.Numero));
 
 
         }

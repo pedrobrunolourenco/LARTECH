@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using System.Text.RegularExpressions;
 using System.Security.Claims;
+using FluentValidation.Internal;
 
 namespace Lartech.Domain.Entidades
 {
@@ -19,12 +20,14 @@ namespace Lartech.Domain.Entidades
             CPF = cpf;
             DataNascimento = datanascimento;
             Ativo = ativo;
+            ListaTelefones = new List<Telefone>();
         }
 
         public string Nome { get; private set; }
         public string CPF { get; private set; }
         public DateTime DataNascimento { get; private set; }
         public bool Ativo { get; private set; }
+        public List<Telefone> ListaTelefones { get; private set; }
 
         private readonly List<Telefone> _telefones;
 
@@ -40,6 +43,11 @@ namespace Lartech.Domain.Entidades
             Ativo = false;
         }
 
+        public void AdicionarTelefoneNaLista(Telefone telefone)
+        {
+            telefone.AtribuirIdPessoa(Id);
+            ListaTelefones.Add(telefone);
+        }
 
         public override bool Validar()
         {
@@ -66,7 +74,7 @@ namespace Lartech.Domain.Entidades
                 RuleFor(p => p.Nome)
                     .MinimumLength(5)
                     .WithMessage("O nome deve ter no mínimo 5 caracteres.");
-
+           
                 RuleFor(p => p.Nome)
                     .MaximumLength(100)
                     .WithMessage("O nome deve ter no máximo 100 caracteres.");

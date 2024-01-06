@@ -1,9 +1,11 @@
-﻿using Lartech.Domain.Entidades;
+﻿using Lartech.Domain.DTOS;
+using Lartech.Domain.Entidades;
 
 namespace Lartech.Domain.Interfaces.Service
 {
     public interface IServicePessoa
     {
+        IEnumerable<PessoaDTO> ObterListagemPessoasTelefones();
         IEnumerable<Pessoa> ObterTodas();
         Pessoa? ObterPorId(Guid id);
         Pessoa? ObterPorCpf(string cpf);
