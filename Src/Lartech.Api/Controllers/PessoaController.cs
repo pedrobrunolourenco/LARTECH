@@ -23,13 +23,13 @@ namespace Lartech.Api.Controllers
 
 
         [HttpGet]
-        [Route("Obter-Todas")]
+        [Route("Obter-Todos")]
         [AllowAnonymous]
         public IActionResult ObterTodas()
         {
             try
             {
-                var result = _appPessoa.ObterTodas();
+                var result = _appPessoa.ObterTodos();
                 return RetornoRequest(result);
             }
             catch (Exception ex)

@@ -30,11 +30,6 @@ namespace Lartech.Data.Repositories
             return DbSet.ToList();
         }
 
-        public TEntidade? ObterPorId(Guid id)
-        {
-            return DbSet.Find(id); 
-        }
-
         public void Adicionar(TEntidade obj)
         {
             DbSet.Add(obj);

@@ -11,7 +11,6 @@ namespace Lartech.Domain.Interfaces.Repository
     {
         void DetachAllEntities();
         IEnumerable<TEntidade> Listar();
-        TEntidade? ObterPorId(Guid id);
         void Adicionar(TEntidade obj);
         void Atualizar(TEntidade obj);
         void Remover(TEntidade obj);

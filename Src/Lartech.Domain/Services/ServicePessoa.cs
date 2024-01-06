@@ -83,11 +83,11 @@ namespace Lartech.Domain.Services
 
         public void ExcluirPessoa(Guid id)
         {
-            var pessoa = _repositoryPessoa.ObterPorId(id);
-            if (pessoa == null) return;
-            _repositoryPessoa.DetachAllEntities();
-            _repositoryPessoa.Remover(pessoa);
-            _repositoryPessoa.Salvar();
+            // var pessoa = _repositoryPessoa.ObterPorId(id);
+            // if (pessoa == null) return;
+            // _repositoryPessoa.DetachAllEntities();
+            // _repositoryPessoa.Remover(pessoa);
+            // _repositoryPessoa.Salvar();
         }
 
         public Pessoa Inativar(Pessoa pessoa)
@@ -100,7 +100,7 @@ namespace Lartech.Domain.Services
             return _repositoryPessoa.ObterPorCpf(cpf);
         }
 
-        public Pessoa? ObterPorId(Guid id)
+        public PessoaViewModel? ObterPorId(Guid id)
         {
             return _repositoryPessoa.ObterPorId(id);
         }
@@ -111,9 +111,9 @@ namespace Lartech.Domain.Services
             return _repositoryPessoa.ObterPorParteDoNome(nome);
         }
 
-        public IEnumerable<Pessoa> ObterTodas()
+        public IEnumerable<PessoaViewModel> ObterTodos()
         {
-            return _repositoryPessoa.Listar();
+            return _repositoryPessoa.ObterTodos();
         }
 
         public IEnumerable<PessoaViewModel> ObterAtivos()
@@ -156,11 +156,11 @@ namespace Lartech.Domain.Services
 
         public void ExcluirTelefone(Guid idtelefone)
         {
-            var fone = _repositoryTelefone.ObterPorId(idtelefone);
-            if (fone == null) return;
-            _repositoryTelefone.DetachAllEntities();
-            _repositoryTelefone.Remover(fone);
-            _repositoryTelefone.Salvar();
+            //var fone = _repositoryTelefone.ObterPorId(idtelefone);
+            //if (fone == null) return;
+            //_repositoryTelefone.DetachAllEntities();
+            //_repositoryTelefone.Remover(fone);
+            //_repositoryTelefone.Salvar();
         }
 
         private bool VerificarSeTelefoneJaExiste(Telefone telefone)

@@ -5,8 +5,8 @@ namespace Lartech.Domain.Interfaces.Service
 {
     public interface IServicePessoa
     {
-        IEnumerable<Pessoa> ObterTodas();
-        Pessoa? ObterPorId(Guid id);
+        IEnumerable<PessoaViewModel> ObterTodos();
+        PessoaViewModel? ObterPorId(Guid id);
         PessoaViewModel? ObterPorCpf(string cpf);
         IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome);
 

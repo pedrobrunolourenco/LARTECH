@@ -21,9 +21,9 @@ namespace Lartech.Application.Services
             _servicePessoa = servicePessoa;
         }
 
-        public IEnumerable<PessoaModel> ObterTodas()
+        public IEnumerable<PessoaViewModel> ObterTodos()
         {
-            return _mapper.Map<IEnumerable<PessoaModel>>(_servicePessoa.ObterTodas());
+            return _servicePessoa.ObterTodos();
         }
 
         public IEnumerable<PessoaViewModel> ObterAtivos()
@@ -35,9 +35,9 @@ namespace Lartech.Application.Services
         {
             return _servicePessoa.ObterInativos();
         }
-        public PessoaModel? ObterPorId(Guid id)
+        public PessoaViewModel? ObterPorId(Guid id)
         {
-            return _mapper.Map<PessoaModel>(_servicePessoa.ObterPorId(id));
+            return _servicePessoa.ObterPorId(id);
         }
 
         public PessoaViewModel? ObterPorCpf(string cpf)

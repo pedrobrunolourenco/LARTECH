@@ -3,8 +3,6 @@ using Lartech.Domain.DTOS;
 using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace Lartech.Data.Repositories
@@ -17,20 +15,50 @@ namespace Lartech.Data.Repositories
 
         }
 
-        public Pessoa Ativar(Pessoa pessoa)
+        public PessoaViewModel? ObterPorId(Guid id)
         {
-            pessoa.Ativar();
-            Atualizar(pessoa);
-            Salvar();
-            return pessoa;
+            StringBuilder query = new StringBuilder();
+
+            query.Append(@$" SELECT DISTINCT p.Id, 
+                                   p.Nome,
+                                   p.CPF,
+                                   p.DataNascimento,
+                                   p.Ativo,
+                                   t.Numero,
+                                   t.Tipo
+                                   FROM Pessoas p WITH(NOLOCK) 
+							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
+                            WHERE p.ID = @ID
+							ORDER BY p.Nome
+                          ");
+
+            var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString(), new { ID = id }).ToList();
+            var pessoaViewModel = TransformarDTO(retorno).FirstOrDefault();
+            return pessoaViewModel;
+
         }
 
-        public Pessoa Inativar(Pessoa pessoa)
+
+
+        public IEnumerable<PessoaViewModel> ObterTodos()
         {
-            pessoa.Inativar();
-            Atualizar(pessoa);
-            Salvar();
-            return pessoa;
+            StringBuilder query = new StringBuilder();
+
+            query.Append(@$" SELECT DISTINCT p.Id, 
+                                   p.Nome,
+                                   p.CPF,
+                                   p.DataNascimento,
+                                   p.Ativo,
+                                   t.Numero,
+                                   t.Tipo
+                                   FROM Pessoas p WITH(NOLOCK) 
+							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
+							ORDER BY p.Nome
+                          ");
+
+            var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString()).ToList();
+            var pessoaViewModel = TransformarDTO(retorno);
+            return pessoaViewModel;
         }
 
         public IEnumerable<PessoaViewModel> ObterAtivos()
@@ -122,6 +150,24 @@ namespace Lartech.Data.Repositories
             var pessoaViewModel = TransformarDTO(retorno);
             return pessoaViewModel;
         }
+
+
+        public Pessoa Ativar(Pessoa pessoa)
+        {
+            pessoa.Ativar();
+            Atualizar(pessoa);
+            Salvar();
+            return pessoa;
+        }
+
+        public Pessoa Inativar(Pessoa pessoa)
+        {
+            pessoa.Inativar();
+            Atualizar(pessoa);
+            Salvar();
+            return pessoa;
+        }
+
 
         private List<PessoaViewModel> TransformarDTO(List<PessoaDTO> dto)
         {

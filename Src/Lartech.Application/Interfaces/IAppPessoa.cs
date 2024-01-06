@@ -5,8 +5,8 @@ namespace Lartech.Application.Interfaces
 {
     public interface IAppPessoa
     {
-        IEnumerable<PessoaModel> ObterTodas();
-        PessoaModel? ObterPorId(Guid id);
+        IEnumerable<PessoaViewModel> ObterTodos();
+        PessoaViewModel? ObterPorId(Guid id);
         PessoaViewModel? ObterPorCpf(string cpf);
         IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome);
 
