@@ -3,12 +3,13 @@ using Lartech.Application.Interfaces;
 using Lartech.Application.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace Lartech.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PessoaController : ControllerBase
+    public class PessoaController :  BasicaController
     {
         private IAppPessoa _appPessoa;
         private ILogger _logger;
@@ -30,11 +31,7 @@ namespace Lartech.Api.Controllers
             try
             {
                 var result = _appPessoa.ObterTodas();
-                return Ok(new
-                {
-                    Sucesso = true,
-                    Data = result
-                });
+                return RetornoRequest(result);
             }
             catch (Exception ex)
             {
@@ -51,11 +48,7 @@ namespace Lartech.Api.Controllers
             try
             {
                 var result = _appPessoa.ObterPorId(id);
-                return Ok(new
-                {
-                    Sucesso = true,
-                    Data = result
-                });
+                return RetornoRequest(result);
             }
             catch (Exception ex)
             {
@@ -72,11 +65,7 @@ namespace Lartech.Api.Controllers
             try
             {
                 var result = _appPessoa.ObterPorCpf(cpf);
-                return Ok(new
-                {
-                    Sucesso = true,
-                    Data = result
-                });
+                return RetornoRequest(result);
             }
             catch (Exception ex)
             {
@@ -93,11 +82,7 @@ namespace Lartech.Api.Controllers
             try
             {
                 var result = _appPessoa.ObterPorParteDoNome(nome);
-                return Ok(new
-                {
-                    Sucesso = true,
-                    Data = result
-                });
+                return RetornoRequest(result);
             }
             catch (Exception ex)
             {
@@ -114,12 +99,7 @@ namespace Lartech.Api.Controllers
             try
             {
                 var result = _appPessoa.ObterAtivos();
-
-                return Ok(new
-                {
-                    Sucesso = true,
-                    Data = result
-                });
+                return RetornoRequest(result);
             }
             catch (Exception ex)
             {
@@ -136,11 +116,7 @@ namespace Lartech.Api.Controllers
             try
             {
                 var result = _appPessoa.ObterInativos();
-                return Ok(new
-                {
-                    Sucesso = true,
-                    Data = result
-                });
+                return RetornoRequest(result);
             }
             catch (Exception ex)
             {
@@ -157,21 +133,23 @@ namespace Lartech.Api.Controllers
             try
             {
                 var pessoa = _appPessoa.IncluirPessoa(model);
-                if(pessoa.ListaErros.Any())
-                {
-                    var erros = AddErros(pessoa.ListaErros);
-                    return BadRequest(new
-                    {
-                        Sucesso = false,
-                        Data = pessoa,
-                        Mensagens = erros
-                    });
-                }
-                return Ok(new
-                {
-                    Sucesso = !pessoa.ListaErros.Any(),
-                    Data = pessoa
-                });
+                return RetornoRequest(pessoa,pessoa.ListaErros);
+
+                //if (pessoa.ListaErros.Any())
+                //{
+                //    var erros = AddErros(pessoa.ListaErros);
+                //    return BadRequest(new
+                //    {
+                //        Sucesso = false,
+                //        Data = pessoa,
+                //        Mensagens = erros
+                //    });
+                //}
+                //return Ok(new
+                //{
+                //    Sucesso = !pessoa.ListaErros.Any(),
+                //    Data = pessoa
+                //});
             }
             catch (Exception ex)
             {
@@ -180,14 +158,25 @@ namespace Lartech.Api.Controllers
             }
         }
 
-        private List<string> AddErros(List<string> erros)
-        {
-            var _errors = new List<string>();
-            foreach (var item in erros)
-            {
-                _errors.Add(item);
-            }
-            return _errors;
-        }
+
+        //private IActionResult RetornoOK(object result)
+        //{
+        //    return Ok(new
+        //    {
+        //        Sucesso = true,
+        //        Data = result
+        //    });
+        //}
+
+
+        //private List<string> AddErros(List<string> erros)
+        //{
+        //    var _errors = new List<string>();
+        //    foreach (var item in erros)
+        //    {
+        //        _errors.Add(item);
+        //    }
+        //    return _errors;
+        //}
     }
 }
