@@ -9,7 +9,7 @@ namespace Lartech.Domain.Entidades
             Id = Guid.NewGuid();
             ListaErros = new List<string>();
         }
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
         public List<string> ListaErros { get; private set; }
 
         public ValidationResult ValidationResult { get; set; }

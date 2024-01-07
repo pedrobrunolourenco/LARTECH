@@ -24,18 +24,6 @@ namespace Lartech.Domain.Entidades
         }
 
 
-        public Pessoa(Guid id, string nome, string cpf, DateTime datanascimento, bool ativo)
-        {
-            Id = id;
-            Nome = nome;
-            CPF = cpf;
-            DataNascimento = datanascimento;
-            Ativo = ativo;
-            ListaTelefones = new List<Telefone>();
-        }
-
-
-
         public string Nome { get; private set; }
         public string CPF { get; private set; }
         public DateTime DataNascimento { get; private set; }
@@ -54,6 +42,20 @@ namespace Lartech.Domain.Entidades
         public void Inativar()
         {
             Ativo = false;
+        }
+
+        public void AtriuirNome(string nome)
+        {
+            Nome = nome;
+        }
+        public void AtriuirCPF(string cpf)
+        {
+            CPF = cpf;
+        }
+
+        public void AtriuirDataNascimento(DateTime datanascimento)
+        {
+            DataNascimento = datanascimento;
         }
 
         public void AdicionarTelefoneNaLista(Telefone telefone)

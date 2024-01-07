@@ -25,6 +25,8 @@ namespace Lartech.Application.Models
         public List<string> ListaErros { get; set; }
 
         [Required(ErrorMessage = "Necessário informar o Id da pessoa")]
+        [IgnoreDataMember]
+        [JsonIgnore]
         public Guid PessoaId { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]

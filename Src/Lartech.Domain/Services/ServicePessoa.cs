@@ -31,12 +31,18 @@ namespace Lartech.Domain.Services
             return pessoa;
         }
 
-        public Pessoa AlterarPessoa(Pessoa pessoa)
+        public Pessoa AlterarPessoa(Pessoa pessoa, Guid id)
         {
-            if (!pessoa.Validar()) return pessoa;
-            if (ValidarRegrasDeDominio(pessoa).ListaErros.Any()) return pessoa;
+            var _pessoa = _repositoryPessoa.BuscarId(id);
+            if (_pessoa == null) return pessoa;
+            _pessoa.AtriuirNome(pessoa.Nome);
+            _pessoa.AtriuirCPF(pessoa.CPF);
+            _pessoa.AtriuirDataNascimento(pessoa.DataNascimento);
+
+            if (!_pessoa.Validar()) return _pessoa;
+            if (ValidarRegrasDeDominio(_pessoa).ListaErros.Any()) return _pessoa;
             _repositoryPessoa.DetachAllEntities();
-            _repositoryPessoa.Atualizar(pessoa);
+            _repositoryPessoa.Atualizar(_pessoa);
             _repositoryPessoa.Salvar();
             return pessoa;
         }
@@ -97,8 +103,9 @@ namespace Lartech.Domain.Services
             return _repositoryTelefone.Listar().Where(x => x.PessoaId == idpessoa);
         }
 
-        public Telefone AdicionarTelefone(Telefone fone)
+        public Telefone AdicionarTelefone(Telefone fone, Guid idpessoa)
         {
+            fone.AtribuirIdPessoa(idpessoa);
             if (!fone.Validar()) return fone;
             if (VerificarSeTelefoneJaExiste(fone)) 
             { 

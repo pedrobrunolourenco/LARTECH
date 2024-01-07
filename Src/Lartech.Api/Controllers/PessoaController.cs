@@ -178,11 +178,11 @@ namespace Lartech.Api.Controllers
         [HttpPost]
         [Route("IncluirTelefone")]
         [AllowAnonymous]
-        public IActionResult IncluirTelefone([FromBody] TelefoneModel model)
+        public IActionResult IncluirTelefone([FromBody] TelefoneModel model, Guid idpessoa)
         {
             try
             {
-                var pessoa = _appPessoa.AdicionarTelefone(model);
+                var pessoa = _appPessoa.AdicionarTelefone(model,idpessoa);
                 return RetornoRequest(pessoa, pessoa.ListaErros);
             }
             catch (Exception ex)
@@ -192,7 +192,7 @@ namespace Lartech.Api.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("AlterarTelefone")]
         [AllowAnonymous]
         public IActionResult AlterarTelefone([FromBody] TelefoneAlteracaoModel model)

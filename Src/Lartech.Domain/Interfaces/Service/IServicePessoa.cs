@@ -14,11 +14,11 @@ namespace Lartech.Domain.Interfaces.Service
         IEnumerable<PessoaViewModel> ObterInativos();
 
         Pessoa IncluirPessoa(Pessoa pessoa);
-        Pessoa AlterarPessoa(Pessoa pessoa);
+        Pessoa AlterarPessoa(Pessoa pessoa, Guid id);
         void ExcluirPessoa(Guid id);
 
         IEnumerable<Telefone> ObterTelefonesDaPessoa(Guid idpessoa);
-        Telefone AdicionarTelefone(Telefone fone);
+        Telefone AdicionarTelefone(Telefone fone, Guid idpessoa);
         Telefone AlterarTelefone(Telefone fone);
         void ExcluirTelefone(Guid idtelefone);
 

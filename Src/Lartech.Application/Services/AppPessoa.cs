@@ -4,7 +4,6 @@ using Lartech.Application.Models;
 using Lartech.Domain.DTOS;
 using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Service;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Lartech.Application.Services
 {
@@ -62,9 +61,8 @@ namespace Lartech.Application.Services
         }
         public PessoaModel AlterarPessoa(PessoaAlteracaoModel pessoa)
         {
-            var _pessoa = _mapper.Map<PessoaModel>(_servicePessoa.AlterarPessoa(_mapper.Map<Pessoa>(pessoa)));
+            var _pessoa = _mapper.Map<PessoaModel>(_servicePessoa.AlterarPessoa( _mapper.Map<Pessoa>(pessoa), pessoa.Id ));
             var telefones = _mapper.Map<IEnumerable<TelefoneModel>>(_servicePessoa.ObterTelefonesDaPessoa(pessoa.Id));
-
             foreach (var tel in telefones)
             {
                 _pessoa.ListaTelefone.Add(tel);
@@ -79,9 +77,9 @@ namespace Lartech.Application.Services
         }
 
 
-        public TelefoneModel AdicionarTelefone(TelefoneModel fone)
+        public TelefoneModel AdicionarTelefone(TelefoneModel fone, Guid idpessoa)
         {
-            return _mapper.Map<TelefoneModel>(_servicePessoa.AdicionarTelefone(_mapper.Map<Telefone>(fone)));
+            return _mapper.Map<TelefoneModel>(_servicePessoa.AdicionarTelefone(_mapper.Map<Telefone>(fone),idpessoa));
         }
 
         public TelefoneModel AlterarTelefone(TelefoneAlteracaoModel fone)
