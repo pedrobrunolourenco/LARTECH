@@ -4,6 +4,7 @@ using Lartech.Application.Models;
 using Lartech.Domain.DTOS;
 using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Service;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Lartech.Application.Services
 {
@@ -70,12 +71,10 @@ namespace Lartech.Application.Services
             return _pessoa;
         }
 
-        public PessoaViewModel? ExcluirPessoa(Guid id)
+        public PessoaModel? ExcluirPessoa(Guid id)
         {
-            _servicePessoa.ExcluirPessoa(id);
-            return _servicePessoa.ObterPorId(id);
+            return _mapper.Map<PessoaModel>(_servicePessoa.ExcluirPessoa(id));
         }
-
 
         public TelefoneModel AdicionarTelefone(TelefoneModel fone, Guid idpessoa)
         {
@@ -86,9 +85,9 @@ namespace Lartech.Application.Services
         {
             return _mapper.Map<TelefoneModel>(_servicePessoa.AlterarTelefone(_mapper.Map<Telefone>(fone)));
         }
-        public void ExcluirTelefone(Guid idtelefone)
+        public TelefoneModel ExcluirTelefone(Guid idtelefone)
         {
-            _servicePessoa.ExcluirTelefone(idtelefone);
+            return _mapper.Map<TelefoneModel>(_servicePessoa.ExcluirTelefone(idtelefone));
         }
 
         public PessoaModel Ativar(PessoaModel pessoa)

@@ -53,13 +53,19 @@ namespace Lartech.Domain.Services
             return _repositoryPessoa.Ativar(pessoa);
         }
 
-        public void ExcluirPessoa(Guid id)
+        public Pessoa ExcluirPessoa(Guid id)
         {
             var pessoa = _repositoryPessoa.BuscarId(id);
-            if (pessoa == null) return;
+            if (pessoa == null)
+            {
+                pessoa = new Pessoa();
+                pessoa.ListaErros.Add("Pessoa não localizada.");
+                return pessoa;
+            }
             _repositoryPessoa.DetachAllEntities();
             _repositoryPessoa.Remover(pessoa);
             _repositoryPessoa.Salvar();
+            return pessoa;
         }
 
         public Pessoa Inativar(Pessoa pessoa)
@@ -130,13 +136,19 @@ namespace Lartech.Domain.Services
             return fone;
         }
 
-        public void ExcluirTelefone(Guid idtelefone)
+        public Telefone ExcluirTelefone(Guid idtelefone)
         {
-            //var fone = _repositoryTelefone.ObterPorId(idtelefone);
-            //if (fone == null) return;
-            //_repositoryTelefone.DetachAllEntities();
-            //_repositoryTelefone.Remover(fone);
-            //_repositoryTelefone.Salvar();
+            var fone = _repositoryTelefone.BuscarId(idtelefone);
+            if (fone == null)
+            {
+                fone = new Telefone();
+                fone.ListaErros.Add($"Telefone não localizado");
+                return fone;
+            }
+            _repositoryTelefone.DetachAllEntities();
+            _repositoryTelefone.Remover(fone);
+            _repositoryTelefone.Salvar();
+            return fone;
         }
 
         private bool VerificarSeTelefoneJaExiste(Telefone telefone)

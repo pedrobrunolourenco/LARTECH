@@ -15,12 +15,12 @@ namespace Lartech.Domain.Interfaces.Service
 
         Pessoa IncluirPessoa(Pessoa pessoa);
         Pessoa AlterarPessoa(Pessoa pessoa, Guid id);
-        void ExcluirPessoa(Guid id);
+        Pessoa ExcluirPessoa(Guid id);
 
         IEnumerable<Telefone> ObterTelefonesDaPessoa(Guid idpessoa);
         Telefone AdicionarTelefone(Telefone fone, Guid idpessoa);
         Telefone AlterarTelefone(Telefone fone);
-        void ExcluirTelefone(Guid idtelefone);
+        Telefone ExcluirTelefone(Guid idtelefone);
 
         Pessoa Ativar(Pessoa pessoa);
         Pessoa Inativar(Pessoa pessoa);

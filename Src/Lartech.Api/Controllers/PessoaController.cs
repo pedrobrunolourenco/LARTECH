@@ -1,6 +1,7 @@
 ﻿
 using Lartech.Application.Interfaces;
 using Lartech.Application.Models;
+using Lartech.Domain.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -166,7 +167,7 @@ namespace Lartech.Api.Controllers
             try
             {
                 var pessoa = _appPessoa.ExcluirPessoa(id);
-                return RetornoRequest(pessoa);
+                return RetornoRequest(pessoa, pessoa.ListaErros);
             }
             catch (Exception ex)
             {
@@ -182,8 +183,8 @@ namespace Lartech.Api.Controllers
         {
             try
             {
-                var pessoa = _appPessoa.AdicionarTelefone(model,idpessoa);
-                return RetornoRequest(pessoa, pessoa.ListaErros);
+                var telefone = _appPessoa.AdicionarTelefone(model,idpessoa);
+                return RetornoRequest(telefone, telefone.ListaErros);
             }
             catch (Exception ex)
             {
@@ -199,8 +200,8 @@ namespace Lartech.Api.Controllers
         {
             try
             {
-                var pessoa = _appPessoa.AlterarTelefone(model);
-                return RetornoRequest(pessoa, pessoa.ListaErros);
+                var telefone = _appPessoa.AlterarTelefone(model);
+                return RetornoRequest(telefone, telefone.ListaErros);
             }
             catch (Exception ex)
             {
@@ -210,6 +211,22 @@ namespace Lartech.Api.Controllers
         }
 
 
+        [HttpDelete]
+        [Route("RemoverTelefone")]
+        [AllowAnonymous]
+        public IActionResult RemoverTelefone(Guid id)
+        {
+            try
+            {
+                var telefone = _appPessoa.ExcluirTelefone(id);
+                return RetornoRequest(telefone, telefone.ListaErros);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"RemoverTelefone {ex.Message}");
+                return BadRequest();
+            }
+        }
 
     }
 }
