@@ -17,6 +17,7 @@ namespace Lartech.Domain.Interfaces.Service
         Pessoa AlterarPessoa(Pessoa pessoa);
         void ExcluirPessoa(Guid id);
 
+        IEnumerable<Telefone> ObterTelefonesDaPessoa(Guid idpessoa);
         Telefone AdicionarTelefone(Telefone fone);
         Telefone AlterarTelefone(Telefone fone);
         void ExcluirTelefone(Guid idtelefone);

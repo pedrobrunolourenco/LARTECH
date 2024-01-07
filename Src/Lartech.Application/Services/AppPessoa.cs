@@ -53,16 +53,23 @@ namespace Lartech.Application.Services
 
         public PessoaModel IncluirPessoa(PessoaModel pessoa)
         {
-            var xpessoa = _mapper.Map<Pessoa>(pessoa);
+            var _pessoa = _mapper.Map<Pessoa>(pessoa);
             foreach (var fone in pessoa.ListaTelefone)
             {
-                xpessoa.AdicionarTelefoneNaLista(_mapper.Map<Telefone>(fone));
+                _pessoa.AdicionarTelefoneNaLista(_mapper.Map<Telefone>(fone));
             }
-            return _mapper.Map<PessoaModel>(_servicePessoa.IncluirPessoa(xpessoa));
+            return _mapper.Map<PessoaModel>(_servicePessoa.IncluirPessoa(_pessoa));
         }
-        public PessoaModel AlterarPessoa(PessoaModel pessoa)
+        public PessoaModel AlterarPessoa(PessoaAlteracaoModel pessoa)
         {
-            return _mapper.Map<PessoaModel>(_servicePessoa.AlterarPessoa(_mapper.Map<Pessoa>(pessoa)));
+            var _pessoa = _mapper.Map<PessoaModel>(_servicePessoa.AlterarPessoa(_mapper.Map<Pessoa>(pessoa)));
+            var telefones = _mapper.Map<IEnumerable<TelefoneModel>>(_servicePessoa.ObterTelefonesDaPessoa(pessoa.Id));
+
+            foreach (var tel in telefones)
+            {
+                _pessoa.ListaTelefone.Add(tel);
+            }
+            return _pessoa;
         }
 
         public void ExcluirPessoa(Guid id)

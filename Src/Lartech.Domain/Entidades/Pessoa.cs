@@ -23,6 +23,19 @@ namespace Lartech.Domain.Entidades
             ListaTelefones = new List<Telefone>();
         }
 
+
+        public Pessoa(Guid id, string nome, string cpf, DateTime datanascimento, bool ativo)
+        {
+            Id = id;
+            Nome = nome;
+            CPF = cpf;
+            DataNascimento = datanascimento;
+            Ativo = ativo;
+            ListaTelefones = new List<Telefone>();
+        }
+
+
+
         public string Nome { get; private set; }
         public string CPF { get; private set; }
         public DateTime DataNascimento { get; private set; }

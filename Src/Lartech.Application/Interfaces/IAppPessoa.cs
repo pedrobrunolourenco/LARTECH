@@ -14,7 +14,7 @@ namespace Lartech.Application.Interfaces
         IEnumerable<PessoaViewModel> ObterInativos();
 
         PessoaModel IncluirPessoa(PessoaModel pessoa);
-        PessoaModel AlterarPessoa(PessoaModel pessoa);
+        PessoaModel AlterarPessoa(PessoaAlteracaoModel pessoa);
         void ExcluirPessoa(Guid id);
 
         TelefoneModel AdicionarTelefone(TelefoneModel fone);

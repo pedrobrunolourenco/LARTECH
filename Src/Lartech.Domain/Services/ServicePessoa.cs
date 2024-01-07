@@ -25,56 +25,22 @@ namespace Lartech.Domain.Services
             if (!pessoa.Validar()) return pessoa;
             if(NaoAdicionouTodosOsTelefones(pessoa)) return pessoa;
             if (ValidarRegrasDeDominio(pessoa).ListaErros.Any()) return pessoa;
-
             pessoa.Ativar();
-
             _repositoryPessoa.Adicionar(pessoa);
             _repositoryPessoa.Salvar();
-
-
-
             return pessoa;
         }
-
-        private bool NaoAdicionouTodosOsTelefones(Pessoa pessoa)
-        {
-            foreach (var telefone in pessoa.ListaTelefones)
-            {
-                if(telefone.Validar())
-                {
-                    _repositoryTelefone.Adicionar(telefone);
-                }
-                else
-                {
-                    foreach (var erroTelefone in telefone.ListaErros)
-                    {
-                        pessoa.ListaErros.Add(erroTelefone);
-                    }
-                }
-            }
-            return pessoa.ListaErros.Any();
-        }
-
-        private Pessoa ValidarRegrasDeDominio(Pessoa pessoa)
-        {
-            if (VerificarSeCPFJaExiste(pessoa))  pessoa.ListaErros.Add($"O CPF {pessoa.CPF} já existe para outra pessoa.");
-            return pessoa;
-        }
-
 
         public Pessoa AlterarPessoa(Pessoa pessoa)
         {
             if (!pessoa.Validar()) return pessoa;
-            if (VerificarSeCPFJaExiste(pessoa))
-            {
-                pessoa.ListaErros.Add($"O CPF {pessoa.CPF} já existe para outra pessoa.");
-                return pessoa;
-            }
+            if (ValidarRegrasDeDominio(pessoa).ListaErros.Any()) return pessoa;
             _repositoryPessoa.DetachAllEntities();
             _repositoryPessoa.Atualizar(pessoa);
             _repositoryPessoa.Salvar();
             return pessoa;
         }
+
 
         public Pessoa Ativar(Pessoa pessoa)
         {
@@ -126,6 +92,10 @@ namespace Lartech.Domain.Services
             return _repositoryPessoa.ObterInativos();
         }
 
+        public IEnumerable<Telefone> ObterTelefonesDaPessoa(Guid idpessoa)
+        {
+            return _repositoryTelefone.Listar().Where(x => x.PessoaId == idpessoa);
+        }
 
         public Telefone AdicionarTelefone(Telefone fone)
         {
@@ -171,6 +141,31 @@ namespace Lartech.Domain.Services
         private bool VerificarSeCPFJaExiste(Pessoa pessoa)
         {
             return _repositoryPessoa.Listar().Where(p => p.CPF == pessoa.CPF && p.Id != pessoa.Id).Any();
+        }
+
+        private bool NaoAdicionouTodosOsTelefones(Pessoa pessoa)
+        {
+            foreach (var telefone in pessoa.ListaTelefones)
+            {
+                if (telefone.Validar())
+                {
+                    _repositoryTelefone.Adicionar(telefone);
+                }
+                else
+                {
+                    foreach (var erroTelefone in telefone.ListaErros)
+                    {
+                        pessoa.ListaErros.Add(erroTelefone);
+                    }
+                }
+            }
+            return pessoa.ListaErros.Any();
+        }
+
+        private Pessoa ValidarRegrasDeDominio(Pessoa pessoa)
+        {
+            if (VerificarSeCPFJaExiste(pessoa)) pessoa.ListaErros.Add($"O CPF {pessoa.CPF} já existe para outra pessoa.");
+            return pessoa;
         }
 
     }

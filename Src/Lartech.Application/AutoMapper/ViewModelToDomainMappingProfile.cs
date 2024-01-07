@@ -15,8 +15,8 @@ namespace Lartech.Application.AutoMapper
             CreateMap<PessoaModel, Pessoa>()
                 .ConstructUsing(p => new Pessoa(p.Nome, p.CPF, p.DataNascimento, p.Ativo));
 
-
-
+            CreateMap<PessoaAlteracaoModel, Pessoa>()
+                .ConstructUsing(p => new Pessoa(p.Id, p.Nome, p.CPF, p.DataNascimento, p.Ativo));
         }
     }
 }

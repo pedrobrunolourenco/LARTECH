@@ -34,7 +34,7 @@ namespace Lartech.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Obter-Todas {ex.Message}");
+                _logger.LogError($"ObterTodos {ex.Message}");
                 return BadRequest();
             }
         }
@@ -51,7 +51,7 @@ namespace Lartech.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Obter-Por-Id {ex.Message}");
+                _logger.LogError($"ObterPorId {ex.Message}");
                 return BadRequest();
             }
         }
@@ -68,7 +68,7 @@ namespace Lartech.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Obter-Por-CPF {ex.Message}");
+                _logger.LogError($"ObterPorCPF {ex.Message}");
                 return BadRequest();
             }
         }
@@ -85,13 +85,13 @@ namespace Lartech.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Obter-Por-Parte-Do-Nome {ex.Message}");
+                _logger.LogError($"ObterPorParteNome {ex.Message}");
                 return BadRequest();
             }
         }
 
         [HttpGet]
-        [Route("Obter-Ativos")]
+        [Route("ObterAtivos")]
         [AllowAnonymous]
         public IActionResult ObterAtivos()
         {
@@ -102,13 +102,13 @@ namespace Lartech.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Obter-Ativos {ex.Message}");
+                _logger.LogError($"ObterAtivos {ex.Message}");
                 return BadRequest();
             }
         }
 
         [HttpGet]
-        [Route("Obter-Inativos")]
+        [Route("ObterInativos")]
         [AllowAnonymous]
         public IActionResult ObterInativos()
         {
@@ -119,13 +119,13 @@ namespace Lartech.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Obter-Inativos {ex.Message}");
+                _logger.LogError($"ObterInativos {ex.Message}");
                 return BadRequest();
             }
         }
 
         [HttpPost]
-        [Route("Incluir-Pessoa")]
+        [Route("IncluirPessoa")]
         [AllowAnonymous]
         public IActionResult IncluirPessoa([FromBody] PessoaModel model)
         {
@@ -136,10 +136,28 @@ namespace Lartech.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Incluir-Pessoa {ex.Message}");
+                _logger.LogError($"IncluirPessoa {ex.Message}");
                 return BadRequest();
             }
         }
+
+        [HttpPut]
+        [Route("AlterarPessoa")]
+        [AllowAnonymous]
+        public IActionResult AlterarPessoa([FromBody] PessoaAlteracaoModel model)
+        {
+            try
+            {
+                var pessoa = _appPessoa.AlterarPessoa(model);
+                return RetornoRequest(pessoa, pessoa.ListaErros);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"AlterarPessoa {ex.Message}");
+                return BadRequest();
+            }
+        }
+
 
     }
 }

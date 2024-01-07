@@ -14,5 +14,6 @@ namespace Lartech.Domain.Interfaces.Repository
         PessoaViewModel? ObterPorCpf(string cpf);
         Pessoa Inativar(Pessoa pessoa);
         Pessoa Ativar(Pessoa pessoa);
+
     }
 }
