@@ -24,6 +24,10 @@ namespace Lartech.Data.Repositories
                 entry.State = EntityState.Detached;
         }
 
+        public TEntidade BuscarId(Guid id)
+        {
+            return DbSet.Find(id);
+        }
 
         public IEnumerable<TEntidade> Listar()
         {

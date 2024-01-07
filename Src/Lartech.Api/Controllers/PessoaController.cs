@@ -23,9 +23,9 @@ namespace Lartech.Api.Controllers
 
 
         [HttpGet]
-        [Route("Obter-Todos")]
+        [Route("ObterTodos")]
         [AllowAnonymous]
-        public IActionResult ObterTodas()
+        public IActionResult ObterTodos()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Lartech.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Obter-Por-Id")]
+        [Route("ObterPorId")]
         [AllowAnonymous]
         public IActionResult ObterPorId(Guid id)
         {
@@ -57,7 +57,7 @@ namespace Lartech.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Obter-Por-CPF")]
+        [Route("ObterPorCPF")]
         [AllowAnonymous]
         public IActionResult ObterPorCpf(string cpf)
         {
@@ -74,7 +74,7 @@ namespace Lartech.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Obter-Por-Parte-Do-Nome")]
+        [Route("ObterPorParteNome")]
         [AllowAnonymous]
         public IActionResult ObterPorParteDoNome(string nome)
         {
