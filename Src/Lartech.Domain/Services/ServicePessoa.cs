@@ -48,9 +48,20 @@ namespace Lartech.Domain.Services
         }
 
 
-        public Pessoa Ativar(Pessoa pessoa)
+        public Pessoa AtivarPessoa(Guid id)
         {
-            return _repositoryPessoa.Ativar(pessoa);
+            var pessoa = _repositoryPessoa.BuscarId(id);
+            if (pessoa == null)
+            {
+                pessoa = new Pessoa();
+                pessoa.ListaErros.Add("Pessoa não localizada.");
+                return pessoa;
+            }
+            pessoa.Ativar();
+            _repositoryPessoa.DetachAllEntities();
+            _repositoryPessoa.Atualizar(pessoa);
+            _repositoryPessoa.Salvar();
+            return pessoa;
         }
 
         public Pessoa ExcluirPessoa(Guid id)
@@ -68,9 +79,20 @@ namespace Lartech.Domain.Services
             return pessoa;
         }
 
-        public Pessoa Inativar(Pessoa pessoa)
+        public Pessoa InativarPessoa(Guid id)
         {
-            return _repositoryPessoa.Inativar(pessoa);
+            var pessoa = _repositoryPessoa.BuscarId(id);
+            if (pessoa == null)
+            {
+                pessoa = new Pessoa();
+                pessoa.ListaErros.Add("Pessoa não localizada.");
+                return pessoa;
+            }
+            pessoa.Inativar();
+            _repositoryPessoa.DetachAllEntities();
+            _repositoryPessoa.Atualizar(pessoa);
+            _repositoryPessoa.Salvar();
+            return pessoa;
         }
 
         public PessoaViewModel? ObterPorCpf(string cpf)

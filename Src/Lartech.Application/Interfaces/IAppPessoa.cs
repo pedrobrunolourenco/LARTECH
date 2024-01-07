@@ -21,8 +21,8 @@ namespace Lartech.Application.Interfaces
         TelefoneModel AlterarTelefone(TelefoneAlteracaoModel fone);
         TelefoneModel ExcluirTelefone(Guid idtelefone);
 
-        PessoaModel Ativar(PessoaModel pessoa);
-        PessoaModel Inativar(PessoaModel pessoa);
+        PessoaModel Ativar(Guid id);
+        PessoaModel Inativar(Guid id);
 
     }
 }

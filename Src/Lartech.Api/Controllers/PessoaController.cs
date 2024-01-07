@@ -228,5 +228,39 @@ namespace Lartech.Api.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("AtivarPessoa")]
+        [AllowAnonymous]
+        public IActionResult AtivarPessoa(Guid id)
+        {
+            try
+            {
+                var pessoa = _appPessoa.Ativar(id);
+                return RetornoRequest(pessoa, pessoa.ListaErros);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"AtivarPessoa {ex.Message}");
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        [Route("InativarPessoa")]
+        [AllowAnonymous]
+        public IActionResult InativarPessoa(Guid id)
+        {
+            try
+            {
+                var pessoa = _appPessoa.Inativar(id);
+                return RetornoRequest(pessoa, pessoa.ListaErros);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"InativarPessoa {ex.Message}");
+                return BadRequest();
+            }
+        }
+
     }
 }

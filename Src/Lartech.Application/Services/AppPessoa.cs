@@ -90,18 +90,15 @@ namespace Lartech.Application.Services
             return _mapper.Map<TelefoneModel>(_servicePessoa.ExcluirTelefone(idtelefone));
         }
 
-        public PessoaModel Ativar(PessoaModel pessoa)
+        public PessoaModel Ativar(Guid id)
         {
-            return _mapper.Map<PessoaModel>(_servicePessoa.Ativar(_mapper.Map<Pessoa>(pessoa)));
+            return _mapper.Map<PessoaModel>(_servicePessoa.AtivarPessoa(id));
         }
 
-        public PessoaModel Inativar(PessoaModel pessoa)
+        public PessoaModel Inativar(Guid id)
         {
-            return _mapper.Map<PessoaModel>(_servicePessoa.Inativar(_mapper.Map<Pessoa>(pessoa)));
+            return _mapper.Map<PessoaModel>(_servicePessoa.InativarPessoa(id));
         }
-
-
-
 
     }
 }

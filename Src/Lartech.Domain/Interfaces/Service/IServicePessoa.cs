@@ -22,8 +22,8 @@ namespace Lartech.Domain.Interfaces.Service
         Telefone AlterarTelefone(Telefone fone);
         Telefone ExcluirTelefone(Guid idtelefone);
 
-        Pessoa Ativar(Pessoa pessoa);
-        Pessoa Inativar(Pessoa pessoa);
+        Pessoa AtivarPessoa(Guid id);
+        Pessoa InativarPessoa(Guid id);
 
     }
 }
