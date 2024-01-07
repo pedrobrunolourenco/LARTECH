@@ -192,6 +192,24 @@ namespace Lartech.Api.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("AlterarTelefone")]
+        [AllowAnonymous]
+        public IActionResult AlterarTelefone([FromBody] TelefoneAlteracaoModel model)
+        {
+            try
+            {
+                var pessoa = _appPessoa.AlterarTelefone(model);
+                return RetornoRequest(pessoa, pessoa.ListaErros);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"AlterarTelefone {ex.Message}");
+                return BadRequest();
+            }
+        }
+
+
 
     }
 }

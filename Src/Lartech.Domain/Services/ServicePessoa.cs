@@ -112,14 +112,13 @@ namespace Lartech.Domain.Services
 
         public Telefone AlterarTelefone(Telefone fone)
         {
-            if (!fone.Validar()) return fone;
-            if (VerificarSeTelefoneJaExiste(fone))
-            {
-                fone.ListaErros.Add($"O telefone {fone.Numero} já existe para outra pessoa.");
-                return fone;
-            }
+            var telefone = _repositoryTelefone.BuscarId(fone.Id);
+            if (telefone == null) return fone;
+            telefone.AtribuirTipo(fone.Tipo);
+            telefone.AtribuirNumero(fone.Numero);
+            if (!telefone.Validar()) return telefone;
             _repositoryTelefone.DetachAllEntities();
-            _repositoryTelefone.Atualizar(fone);
+            _repositoryTelefone.Atualizar(telefone);
             _repositoryTelefone.Salvar();
             return fone;
         }

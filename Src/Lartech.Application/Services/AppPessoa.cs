@@ -84,7 +84,7 @@ namespace Lartech.Application.Services
             return _mapper.Map<TelefoneModel>(_servicePessoa.AdicionarTelefone(_mapper.Map<Telefone>(fone)));
         }
 
-        public TelefoneModel AlterarTelefone(TelefoneModel fone)
+        public TelefoneModel AlterarTelefone(TelefoneAlteracaoModel fone)
         {
             return _mapper.Map<TelefoneModel>(_servicePessoa.AlterarTelefone(_mapper.Map<Telefone>(fone)));
         }

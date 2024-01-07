@@ -18,7 +18,7 @@ namespace Lartech.Application.Interfaces
         PessoaViewModel? ExcluirPessoa(Guid id);
 
         TelefoneModel AdicionarTelefone(TelefoneModel fone);
-        TelefoneModel AlterarTelefone(TelefoneModel fone);
+        TelefoneModel AlterarTelefone(TelefoneAlteracaoModel fone);
         void ExcluirTelefone(Guid idtelefone);
 
         PessoaModel Ativar(PessoaModel pessoa);

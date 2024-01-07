@@ -41,6 +41,16 @@ namespace Lartech.Domain.Entidades
             PessoaId = idpessoa;
         }
 
+        public void AtribuirTipo(TipoTelefone tipo)
+        {
+            Tipo = tipo;
+        }
+
+        public void AtribuirNumero(string numero)
+        {
+            Numero = numero;
+        }
+
         public override bool Validar()
         {
             ValidationResult = new TelefoneValidation().Validate(this);
