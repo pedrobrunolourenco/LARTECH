@@ -9,6 +9,7 @@ namespace Lartech.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PessoaController :  BasicaController
     {
         private IAppPessoa _appPessoa;
@@ -25,7 +26,6 @@ namespace Lartech.Api.Controllers
 
         [HttpGet]
         [Route("ObterTodos")]
-        [AllowAnonymous]
         public IActionResult ObterTodos()
         {
             try
@@ -42,7 +42,6 @@ namespace Lartech.Api.Controllers
 
         [HttpGet]
         [Route("ObterPorId")]
-        [AllowAnonymous]
         public IActionResult ObterPorId(Guid id)
         {
             try
@@ -59,7 +58,6 @@ namespace Lartech.Api.Controllers
 
         [HttpGet]
         [Route("ObterPorCPF")]
-        [AllowAnonymous]
         public IActionResult ObterPorCpf(string cpf)
         {
             try
@@ -76,7 +74,6 @@ namespace Lartech.Api.Controllers
 
         [HttpGet]
         [Route("ObterPorParteNome")]
-        [AllowAnonymous]
         public IActionResult ObterPorParteDoNome(string nome)
         {
             try
@@ -93,7 +90,6 @@ namespace Lartech.Api.Controllers
 
         [HttpGet]
         [Route("ObterAtivos")]
-        [AllowAnonymous]
         public IActionResult ObterAtivos()
         {
             try
@@ -110,7 +106,6 @@ namespace Lartech.Api.Controllers
 
         [HttpGet]
         [Route("ObterInativos")]
-        [AllowAnonymous]
         public IActionResult ObterInativos()
         {
             try
@@ -127,7 +122,6 @@ namespace Lartech.Api.Controllers
 
         [HttpPost]
         [Route("IncluirPessoa")]
-        [AllowAnonymous]
         public IActionResult IncluirPessoa([FromBody] PessoaModel model)
         {
             try
@@ -144,7 +138,6 @@ namespace Lartech.Api.Controllers
 
         [HttpPut]
         [Route("AlterarPessoa")]
-        [AllowAnonymous]
         public IActionResult AlterarPessoa([FromBody] PessoaAlteracaoModel model)
         {
             try
@@ -161,7 +154,6 @@ namespace Lartech.Api.Controllers
 
         [HttpDelete]
         [Route("RemoverPessoa")]
-        [AllowAnonymous]
         public IActionResult RemoverPessoa(Guid id)
         {
             try
@@ -178,7 +170,6 @@ namespace Lartech.Api.Controllers
 
         [HttpPost]
         [Route("IncluirTelefone")]
-        [AllowAnonymous]
         public IActionResult IncluirTelefone([FromBody] TelefoneModel model, Guid idpessoa)
         {
             try
@@ -195,7 +186,6 @@ namespace Lartech.Api.Controllers
 
         [HttpPut]
         [Route("AlterarTelefone")]
-        [AllowAnonymous]
         public IActionResult AlterarTelefone([FromBody] TelefoneAlteracaoModel model)
         {
             try
@@ -213,7 +203,6 @@ namespace Lartech.Api.Controllers
 
         [HttpDelete]
         [Route("RemoverTelefone")]
-        [AllowAnonymous]
         public IActionResult RemoverTelefone(Guid id)
         {
             try
@@ -230,7 +219,6 @@ namespace Lartech.Api.Controllers
 
         [HttpPut]
         [Route("AtivarPessoa")]
-        [AllowAnonymous]
         public IActionResult AtivarPessoa(Guid id)
         {
             try
@@ -247,7 +235,6 @@ namespace Lartech.Api.Controllers
 
         [HttpPut]
         [Route("InativarPessoa")]
-        [AllowAnonymous]
         public IActionResult InativarPessoa(Guid id)
         {
             try
