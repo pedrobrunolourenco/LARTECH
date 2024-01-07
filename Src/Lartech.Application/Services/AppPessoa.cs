@@ -72,9 +72,10 @@ namespace Lartech.Application.Services
             return _pessoa;
         }
 
-        public void ExcluirPessoa(Guid id)
+        public PessoaViewModel? ExcluirPessoa(Guid id)
         {
             _servicePessoa.ExcluirPessoa(id);
+            return _servicePessoa.ObterPorId(id);
         }
 
 

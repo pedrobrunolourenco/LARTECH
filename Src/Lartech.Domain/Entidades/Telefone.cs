@@ -63,16 +63,13 @@ namespace Lartech.Domain.Entidades
                     .IsInEnum();
 
                 RuleFor(t => t.Numero)
-                    .MinimumLength(11)
+                    .MinimumLength(10)
                     .WithMessage("Informe o telefone com o DDD.");
 
                 RuleFor(t => t.Numero)
                     .MaximumLength(11)
                     .WithMessage("O telefone deve ter 11 digitos.");
             }
-
-
-
         }
 
 

@@ -10,6 +10,7 @@ namespace Lartech.Application.Models
         public TelefoneModel()
         {
             Id = Guid.NewGuid();
+            PessoaId = Guid.Empty;
             ListaErros = new List<string>();
         }
 
@@ -18,14 +19,13 @@ namespace Lartech.Application.Models
         [JsonIgnore]
         public Guid Id { get; set; }
 
+
         [IgnoreDataMember]
         [JsonIgnore]
         public List<string> ListaErros { get; set; }
 
-        [IgnoreDataMember]
-        [JsonIgnore]
+        [Required(ErrorMessage = "Necessário informar o Id da pessoa")]
         public Guid PessoaId { get; set; }
-
         public TipoTelefone Tipo { get; set; }
 
         [Required(ErrorMessage = "Necessário informar número")]

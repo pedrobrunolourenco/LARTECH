@@ -49,11 +49,11 @@ namespace Lartech.Domain.Services
 
         public void ExcluirPessoa(Guid id)
         {
-            // var pessoa = _repositoryPessoa.ObterPorId(id);
-            // if (pessoa == null) return;
-            // _repositoryPessoa.DetachAllEntities();
-            // _repositoryPessoa.Remover(pessoa);
-            // _repositoryPessoa.Salvar();
+            var pessoa = _repositoryPessoa.BuscarId(id);
+            if (pessoa == null) return;
+            _repositoryPessoa.DetachAllEntities();
+            _repositoryPessoa.Remover(pessoa);
+            _repositoryPessoa.Salvar();
         }
 
         public Pessoa Inativar(Pessoa pessoa)
@@ -102,7 +102,7 @@ namespace Lartech.Domain.Services
             if (!fone.Validar()) return fone;
             if (VerificarSeTelefoneJaExiste(fone)) 
             { 
-                fone.ListaErros.Add($"O telefone {fone.Numero} já existe para outra pessoa." );
+                fone.ListaErros.Add($"O telefone {fone.Numero} já existe para esta pessoa." );
                 return fone;
             }
             _repositoryTelefone.Adicionar(fone);
@@ -135,7 +135,7 @@ namespace Lartech.Domain.Services
 
         private bool VerificarSeTelefoneJaExiste(Telefone telefone)
         {
-            return _repositoryTelefone.Listar().Where(t => t.Numero == telefone.Numero && t.Id != telefone.Id).Any();
+            return _repositoryTelefone.Listar().Where(t => t.Numero == telefone.Numero && t.PessoaId == telefone.PessoaId).Any();
         }
 
         private bool VerificarSeCPFJaExiste(Pessoa pessoa)

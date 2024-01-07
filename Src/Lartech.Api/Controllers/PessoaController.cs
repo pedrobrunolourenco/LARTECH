@@ -158,6 +158,40 @@ namespace Lartech.Api.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("RemoverPessoa")]
+        [AllowAnonymous]
+        public IActionResult RemoverPessoa(Guid id)
+        {
+            try
+            {
+                var pessoa = _appPessoa.ExcluirPessoa(id);
+                return RetornoRequest(pessoa);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"RemoverPessoa {ex.Message}");
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route("IncluirTelefone")]
+        [AllowAnonymous]
+        public IActionResult IncluirTelefone([FromBody] TelefoneModel model)
+        {
+            try
+            {
+                var pessoa = _appPessoa.AdicionarTelefone(model);
+                return RetornoRequest(pessoa, pessoa.ListaErros);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"IncluirTelefone {ex.Message}");
+                return BadRequest();
+            }
+        }
+
 
     }
 }
