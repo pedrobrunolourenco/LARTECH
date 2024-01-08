@@ -93,6 +93,22 @@ namespace Lattech.Tests.Domain.Services
             Assert.True(pessoaService.InativarPessoa(pessoaDados.Id).Ativo == false);
         }
 
+        [Fact(DisplayName = "Excluir Pessoa")]
+        public void RexcluirPessoa()
+        {
+            // arrange
+            var repositoryPessoa = new Mock<IRepositoryPessoa>();
+            var repositoryTelefone = new Mock<IRepositoryTelefone>();
+            // Act
+            var pessoaService = new ServicePessoa(repositoryPessoa.Object,
+                                                  repositoryTelefone.Object);
+
+            repositoryPessoa.Setup(x => x.BuscarId(It.IsAny<Guid>())).Returns(pessoaOk);
+            // assert
+            Assert.True(!pessoaService.ExcluirPessoa(pessoaDados.Id).ListaErros.Any());
+        }
+
+
 
     }
 }
