@@ -39,19 +39,6 @@ namespace Lartech.Api.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        //private string GerarJwt()
-        //{
-        //    var tokenHandler = new JwtSecurityTokenHandler();
-        //    var key = Encoding.ASCII.GetBytes("App-Teste-Pedro-Bruno");
-        //    var tokenDescriptor = new SecurityTokenDescriptor
-        //    {
-        //        Expires = DateTime.UtcNow.AddHours(5),
-        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        //    };
-        //    return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-        //}
-
-
         [HttpPost]
         [Route("Login")]
         [AllowAnonymous]
