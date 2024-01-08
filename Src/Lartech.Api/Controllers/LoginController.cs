@@ -30,26 +30,26 @@ namespace Lartech.Api.Controllers
 
         private string GerarToken(Users users)
         {
-            var chaveSegura = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var chaveSegura = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("App-Teste-Pedro-Bruno"));
             var credencial = new SigningCredentials(chaveSegura, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"], _config["Jwt:Audience"],null,
-                                              expires: DateTime.Now.AddMinutes(90),
-                                              signingCredentials: credencial
+            var token = new JwtSecurityToken(null,
+                                             expires: DateTime.Now.AddMinutes(90),
+                                             signingCredentials: credencial
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private string GerarJwt()
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("App-Teste-Pedro-Bruno");
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Expires = DateTime.UtcNow.AddHours(5),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-        }
+        //private string GerarJwt()
+        //{
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes("App-Teste-Pedro-Bruno");
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //        Expires = DateTime.UtcNow.AddHours(5),
+        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        //    };
+        //    return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+        //}
 
 
         [HttpPost]
@@ -62,7 +62,7 @@ namespace Lartech.Api.Controllers
             if (user_ != null)
             {
                 // var token = GerarToken(user_);
-                var token = GerarJwt();
+                var token = GerarToken(login);
                 response = Ok(new { Token = token });
             }
 

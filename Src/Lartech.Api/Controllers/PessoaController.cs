@@ -26,7 +26,7 @@ namespace Lartech.Api.Controllers
 
         [HttpGet]
         [Route("ObterTodos")]
-        [AllowAnonymous]
+        // [AllowAnonymous]
         public IActionResult ObterTodos()
         {
             try
