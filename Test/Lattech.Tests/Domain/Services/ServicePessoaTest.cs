@@ -1,5 +1,7 @@
-﻿using Lartech.Domain.Entidades;
+﻿using Lartech.Domain.DTOS;
+using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Repository;
+using Lartech.Domain.Interfaces.Service;
 using Lartech.Domain.Services;
 using Moq;
 
@@ -10,6 +12,7 @@ namespace Lattech.Tests.Domain.Services
         public Pessoa pessoaOk { get; set; }
         public Pessoa pessoaDados { get; set; }
         public Telefone telefone { get; set; }
+        public PessoaViewModel pessoaViewModel { get; set; }
 
 
         public ServicePessoaTest()
@@ -46,7 +49,7 @@ namespace Lattech.Tests.Domain.Services
 
 
         [Fact(DisplayName = "Alterar Pessoa")]
-        public void AlterarPesoa()
+        public void AlterarPessoa()
         {
             // arrange
             var repositoryPessoa = new Mock<IRepositoryPessoa>();
@@ -56,6 +59,38 @@ namespace Lattech.Tests.Domain.Services
                                                   repositoryTelefone.Object);
             // assert
             Assert.True(!pessoaService.AlterarPessoa(pessoaDados, pessoaDados.Id).ListaErros.Any());
+        }
+
+        [Fact(DisplayName = "Ativar Pessoa")]
+        public void AtivarPessoa()
+        {
+            // arrange
+            var repositoryPessoa = new Mock<IRepositoryPessoa>();
+            var repositoryTelefone = new Mock<IRepositoryTelefone>();
+
+            // Act
+            var pessoaService = new ServicePessoa(repositoryPessoa.Object,
+                                                  repositoryTelefone.Object);
+
+            repositoryPessoa.Setup(x => x.BuscarId(It.IsAny<Guid>())).Returns(pessoaOk);
+
+            // assert
+            Assert.True(pessoaService.AtivarPessoa(pessoaDados.Id).Ativo == true);
+        }
+
+        [Fact(DisplayName = "Inativar Pessoa")]
+        public void InativarPessoa()
+        {
+            // arrange
+            var repositoryPessoa = new Mock<IRepositoryPessoa>();
+            var repositoryTelefone = new Mock<IRepositoryTelefone>();
+            // Act
+            var pessoaService = new ServicePessoa(repositoryPessoa.Object,
+                                                  repositoryTelefone.Object);
+
+            repositoryPessoa.Setup(x => x.BuscarId(It.IsAny<Guid>())).Returns(pessoaOk);
+            // assert
+            Assert.True(pessoaService.InativarPessoa(pessoaDados.Id).Ativo == false);
         }
 
 
