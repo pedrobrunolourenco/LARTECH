@@ -1,7 +1,6 @@
 ﻿
 using Lartech.Application.Interfaces;
 using Lartech.Application.Models;
-using Lartech.Domain.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +25,6 @@ namespace Lartech.Api.Controllers
 
         [HttpGet]
         [Route("ObterTodos")]
-        // [AllowAnonymous]
         public IActionResult ObterTodos()
         {
             try
