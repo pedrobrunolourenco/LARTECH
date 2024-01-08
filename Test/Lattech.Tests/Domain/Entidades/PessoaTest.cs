@@ -1,5 +1,4 @@
 ﻿using Lartech.Domain.Entidades;
-using static Lartech.Domain.Entidades.Pessoa;
 
 namespace Lattech.Tests.Domain.Entidades
 {
@@ -18,7 +17,7 @@ namespace Lattech.Tests.Domain.Entidades
 
             pessoaOk = new Pessoa("Teste Pessoa Ok",
                                         "38651203187",
-                                        DateTime.Today,
+                                        DateTime.Today.AddYears(-10),
                                         true);
 
             pessoaNaoOk = new Pessoa("",
