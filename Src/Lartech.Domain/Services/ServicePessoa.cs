@@ -2,7 +2,6 @@
 using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Repository;
 using Lartech.Domain.Interfaces.Service;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Lartech.Domain.Services
 {
