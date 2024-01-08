@@ -1,10 +1,6 @@
 ﻿using FluentValidation;
 using Lartech.Domain.Interfaces;
-using System.Collections.Generic;
-using System;
 using System.Text.RegularExpressions;
-using System.Security.Claims;
-using FluentValidation.Internal;
 
 namespace Lartech.Domain.Entidades
 {
