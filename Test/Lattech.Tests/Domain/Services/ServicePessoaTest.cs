@@ -94,7 +94,7 @@ namespace Lattech.Tests.Domain.Services
         }
 
         [Fact(DisplayName = "Excluir Pessoa")]
-        public void RexcluirPessoa()
+        public void ExcluirPessoa()
         {
             // arrange
             var repositoryPessoa = new Mock<IRepositoryPessoa>();
@@ -108,6 +108,48 @@ namespace Lattech.Tests.Domain.Services
             Assert.True(!pessoaService.ExcluirPessoa(pessoaDados.Id).ListaErros.Any());
         }
 
+        [Fact(DisplayName = "Adicionar Telefone")]
+        public void AdcionarTelefone()
+        {
+            // arrange
+            var repositoryPessoa = new Mock<IRepositoryPessoa>();
+            var repositoryTelefone = new Mock<IRepositoryTelefone>();
+            // Act
+            var pessoaService = new ServicePessoa(repositoryPessoa.Object,
+                                                  repositoryTelefone.Object);
+
+            // assert
+            Assert.True(!pessoaService.AdicionarTelefone(telefone, pessoaOk.Id).ListaErros.Any());
+        }
+
+        [Fact(DisplayName = "Alterar Telefone")]
+        public void AlterarTelefone()
+        {
+            // arrange
+            var repositoryPessoa = new Mock<IRepositoryPessoa>();
+            var repositoryTelefone = new Mock<IRepositoryTelefone>();
+            // Act
+            var pessoaService = new ServicePessoa(repositoryPessoa.Object,
+                                                  repositoryTelefone.Object);
+
+            // assert
+            Assert.True(!pessoaService.AlterarTelefone(telefone).ListaErros.Any());
+        }
+
+        [Fact(DisplayName = "Excluir Telefone")]
+        public void ExcluirTelefone()
+        {
+            // arrange
+            var repositoryPessoa = new Mock<IRepositoryPessoa>();
+            var repositoryTelefone = new Mock<IRepositoryTelefone>();
+            // Act
+            var pessoaService = new ServicePessoa(repositoryPessoa.Object,
+                                                  repositoryTelefone.Object);
+
+            repositoryTelefone.Setup(x => x.BuscarId(It.IsAny<Guid>())).Returns(telefone);
+            // assert
+            Assert.True(!pessoaService.ExcluirTelefone(telefone.Id).ListaErros.Any());
+        }
 
 
     }
