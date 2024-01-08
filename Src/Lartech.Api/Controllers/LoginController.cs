@@ -30,7 +30,8 @@ namespace Lartech.Api.Controllers
 
         private string GerarToken(Users users)
         {
-            var chaveSegura = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("App-Teste-Pedro-Bruno"));
+            var chave = _config.GetSection("Jwt:Key").Value;
+            var chaveSegura = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(chave));
             var credencial = new SigningCredentials(chaveSegura, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(null,
                                              expires: DateTime.Now.AddMinutes(90),
