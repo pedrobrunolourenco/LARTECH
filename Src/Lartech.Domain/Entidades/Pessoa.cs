@@ -106,7 +106,7 @@ namespace Lartech.Domain.Entidades
 
 
 
-            protected static bool ValidarCPF(string cpf)
+            public static bool ValidarCPF(string cpf)
             {
                 cpf = Regex.Replace(cpf, @"[^\d]", "");
 

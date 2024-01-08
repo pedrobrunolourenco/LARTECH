@@ -18,7 +18,7 @@ namespace Lartech.Domain.Entidades
 
         public Telefone()
         {
-            
+
         }
 
         public Telefone(Guid pessoaId, TipoTelefone tipo, string numero)
