@@ -10,16 +10,11 @@ namespace Lartech.Data.Repositories
     public class RepositoryPessoa : Repository<Pessoa>, IRepositoryPessoa
     {
 
+        private string queryViewModelBase { get; set; }
+
         public RepositoryPessoa(DataContext context) : base(context)
         {
-
-        }
-
-        public PessoaViewModel? ObterPorId(Guid id)
-        {
-            StringBuilder query = new StringBuilder();
-
-            query.Append(@$" SELECT DISTINCT p.Id, 
+            queryViewModelBase = @" SELECT DISTINCT p.Id, 
                                    p.Nome,
                                    p.CPF,
                                    p.DataNascimento,
@@ -27,35 +22,26 @@ namespace Lartech.Data.Repositories
                                    t.Numero,
                                    t.Tipo
                                    FROM Pessoas p WITH(NOLOCK) 
-							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
-                            WHERE p.ID = @ID
-							ORDER BY p.Nome
-                          ");
+							       LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
+                                 ";
+        }
 
+        public PessoaViewModel? ObterPorId(Guid id)
+        {
+            StringBuilder query = new StringBuilder();
+            query.Append(queryViewModelBase);
+            query.Append(@" WHERE p.ID = @ID ORDER BY p.Nome");
             var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString(), new { ID = id }).ToList();
             var pessoaViewModel = TransformarDTO(retorno).FirstOrDefault();
             return pessoaViewModel;
 
         }
 
-
-
         public IEnumerable<PessoaViewModel> ObterTodos()
         {
             StringBuilder query = new StringBuilder();
-
-            query.Append(@$" SELECT DISTINCT p.Id, 
-                                   p.Nome,
-                                   p.CPF,
-                                   p.DataNascimento,
-                                   p.Ativo,
-                                   t.Numero,
-                                   t.Tipo
-                                   FROM Pessoas p WITH(NOLOCK) 
-							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
-							ORDER BY p.Nome
-                          ");
-
+            query.Append(queryViewModelBase);
+            query.Append(@" ORDER BY p.Nome");
             var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString()).ToList();
             var pessoaViewModel = TransformarDTO(retorno);
             return pessoaViewModel;
@@ -64,20 +50,8 @@ namespace Lartech.Data.Repositories
         public IEnumerable<PessoaViewModel> ObterAtivos()
         {
             StringBuilder query = new StringBuilder();
-
-            query.Append(@$" SELECT DISTINCT p.Id, 
-                                   p.Nome,
-                                   p.CPF,
-                                   p.DataNascimento,
-                                   p.Ativo,
-                                   t.Numero,
-                                   t.Tipo
-                                   FROM Pessoas p WITH(NOLOCK) 
-							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
-                            WHERE p.Ativo = 1
-							ORDER BY p.Nome
-                          ");
-
+            query.Append(queryViewModelBase);
+            query.Append(@"  WHERE p.Ativo = 1 ORDER BY p.Nome");
             var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString()).ToList();
             var pessoaViewModel = TransformarDTO(retorno);
             return pessoaViewModel;
@@ -86,20 +60,8 @@ namespace Lartech.Data.Repositories
         public IEnumerable<PessoaViewModel> ObterInativos()
         {
             StringBuilder query = new StringBuilder();
-
-            query.Append(@$" SELECT DISTINCT p.Id, 
-                                   p.Nome,
-                                   p.CPF,
-                                   p.DataNascimento,
-                                   p.Ativo,
-                                   t.Numero,
-                                   t.Tipo
-                                   FROM Pessoas p WITH(NOLOCK) 
-							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
-                            WHERE p.Ativo = 0
-							ORDER BY p.Nome
-                          ");
-
+            query.Append(queryViewModelBase);
+            query.Append(@"  WHERE p.Ativo = 0 ORDER BY p.Nome");
             var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString()).ToList();
             var pessoaViewModel = TransformarDTO(retorno);
             return pessoaViewModel;
@@ -109,20 +71,8 @@ namespace Lartech.Data.Repositories
         public PessoaViewModel? ObterPorCpf(string cpf)
         {
             StringBuilder query = new StringBuilder();
-
-            query.Append(@$" SELECT DISTINCT p.Id, 
-                                   p.Nome,
-                                   p.CPF,
-                                   p.DataNascimento,
-                                   p.Ativo,
-                                   t.Numero,
-                                   t.Tipo
-                                   FROM Pessoas p WITH(NOLOCK) 
-							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
-                            WHERE p.CPF = @CPF
-							ORDER BY p.Nome
-                          ");
-
+            query.Append(queryViewModelBase);
+            query.Append(@" WHERE p.CPF = @CPF ORDER BY p.Nome");
             var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString(), new { CPF = cpf }).ToList();
             var pessoaViewModel = TransformarDTO(retorno).FirstOrDefault();
             return pessoaViewModel;
@@ -132,20 +82,8 @@ namespace Lartech.Data.Repositories
         public IEnumerable<PessoaViewModel> ObterPorParteDoNome(string nome)
         {
             StringBuilder query = new StringBuilder();
-
-            query.Append(@$" SELECT DISTINCT p.Id, 
-                                   p.Nome,
-                                   p.CPF,
-                                   p.DataNascimento,
-                                   p.Ativo,
-                                   t.Numero,
-                                   t.Tipo
-                                   FROM Pessoas p WITH(NOLOCK) 
-							LEFT JOIN Telefones t  WITH(NOLOCK) ON (p.Id = t.PessoaId)
-                            WHERE p.Nome LIKE @NOME
-							ORDER BY p.Nome
-                          ");
-
+            query.Append(queryViewModelBase);
+            query.Append(@" WHERE p.Nome LIKE @NOME ORDER BY p.Nome");
             var retorno = _context.Database.GetDbConnection().Query<PessoaDTO>(query.ToString(), new { NOME = "%" + nome + "%" }).ToList();
             var pessoaViewModel = TransformarDTO(retorno);
             return pessoaViewModel;
@@ -167,7 +105,6 @@ namespace Lartech.Data.Repositories
             Salvar();
             return pessoa;
         }
-
 
         private List<PessoaViewModel> TransformarDTO(List<PessoaDTO> dto)
         {
