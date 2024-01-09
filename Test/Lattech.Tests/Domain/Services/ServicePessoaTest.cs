@@ -1,7 +1,6 @@
 ﻿using Lartech.Domain.DTOS;
 using Lartech.Domain.Entidades;
 using Lartech.Domain.Interfaces.Repository;
-using Lartech.Domain.Interfaces.Service;
 using Lartech.Domain.Services;
 using Moq;
 

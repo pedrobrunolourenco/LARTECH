@@ -1,6 +1,8 @@
-﻿using Lartech.Api.Setup.Models;
+﻿using Azure;
+using Lartech.Api.Setup.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,20 +12,25 @@ namespace Lartech.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class SecurityController : BasicController
     {
         private IConfiguration _config;
-        public LoginController(IConfiguration configuration)
+        private ILogger _logger;
+
+        public SecurityController(IConfiguration configuration,
+                                  ILogger<SecurityController> logger)
         {
-            _config = configuration;    
+            _config = configuration;
+            _logger = logger;
+
         }
 
         private Users AutenticacaoUsuario(Users user)
         {
-            Users _user = null;
-            if(user.Login == "Adm" && user.Senha == "12345")
+            var _user = new Users();
+            if (user.Login == "Adm" && user.Senha == "12345")
             {
-                _user = new Users { Login = "LARTech" };
+                _user.Login = "LARTech";
             }
             return _user;
         }
@@ -45,17 +52,23 @@ namespace Lartech.Api.Controllers
         [AllowAnonymous]
         public IActionResult Logar(Users login)
         {
-            IActionResult response = Unauthorized();
-            var user_ = AutenticacaoUsuario(login);
-            if (user_ != null)
+            try
             {
-                // var token = GerarToken(user_);
-                var token = GerarToken(login);
-                response = Ok(new { Token = token });
+                var user_ = AutenticacaoUsuario(login);
+                if (user_.Login == "LARTech")
+                {
+                    var token = GerarToken(login);
+                    var response = new { Token = token };
+                   return RetornoRequest(response);
+                }
+                var erro = new List<string> { "Usuáro não encontrado." };
+                return RetornoRequest(user_.Login, erro);
             }
-
-            return response;
-
+            catch (Exception ex)
+            {
+                _logger.LogError($"Logar {ex.Message}");
+                return BadRequest();
+            }
         }
 
     }

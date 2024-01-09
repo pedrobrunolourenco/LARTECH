@@ -1,18 +1,25 @@
-﻿using Lartech.Domain.Entidades;
-using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Lartech.Api.Controllers
 {
-    public abstract class  BasicaController : ControllerBase
+    public abstract class  BasicController : ControllerBase
     {
         protected IActionResult RetornoRequest(object? result)
         {
-            return Ok(new
+            if(result != null)
             {
-                Sucesso = true,
+                return Ok(new
+                {
+                    Sucesso = true,
+                    Data = result
+                });
+            }
+            return NotFound(new
+            {
+                Sucesso = false,
                 Data = result
             });
+
         }
 
         protected IActionResult RetornoRequest(object? result, List<string> erros)

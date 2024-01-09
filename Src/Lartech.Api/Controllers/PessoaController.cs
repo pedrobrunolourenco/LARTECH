@@ -9,7 +9,7 @@ namespace Lartech.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PessoaController :  BasicaController
+    public class PessoaController :  BasicController
     {
         private IAppPessoa _appPessoa;
         private ILogger _logger;
@@ -216,7 +216,7 @@ namespace Lartech.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPatch]
         [Route("AtivarPessoa")]
         public IActionResult AtivarPessoa(Guid id)
         {
@@ -232,7 +232,7 @@ namespace Lartech.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPatch]
         [Route("InativarPessoa")]
         public IActionResult InativarPessoa(Guid id)
         {
