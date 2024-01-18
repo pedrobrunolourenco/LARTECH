@@ -149,7 +149,11 @@ namespace Lartech.Domain.Services
         public Telefone AlterarTelefone(Telefone fone)
         {
             var telefone = _repositoryTelefone.BuscarId(fone.Id);
-            if (telefone == null) return fone;
+            if (telefone == null)
+            {
+                fone.ListaErros.Add("Telefone não localizado!");
+                return fone;
+            }
             telefone.AtribuirTipo(fone.Tipo);
             telefone.AtribuirNumero(fone.Numero);
             if (!telefone.Validar()) return telefone;
